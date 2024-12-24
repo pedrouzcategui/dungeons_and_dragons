@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Turn-Based RPG</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="battleScreen">
+      <!-- Player Section -->
+      <div id="player">
+        <h2>Player</h2>
+        <img src="player.png" alt="Player" />
+        <div class="stats">
+          HP: <span id="playerHP">100</span><br />
+          Defense: <span id="playerDefense">5</span>
+        </div>
+      </div>
+
+      <!-- Controls Section -->
+      <div class="controls">
+        <h3>Actions</h3>
+        <div id="diceResult">--</div>
+        <button id="rollDiceButton">Roll Dice (Attack)</button>
+        <button id="guardButton">Guard</button>
+        <button id="inventoryButton">Inventory</button>
+        <div id="inventoryMenu" class="hidden">
+          <h4>Inventory</h4>
+          <button onclick="useItem(0)">Health Potion</button>
+          <button onclick="useItem(1)">Attack Boost</button>
+          <button onclick="useItem(2)">Defense Boost</button>
+        </div>
+        <div class="rollResults">
+          <p id="rollText">Choose your action!</p>
+        </div>
+      </div>
+
+      <!-- Enemy Section -->
+      <div id="enemy">
+        <h2>Enemy</h2>
+        <img src="enemy.png" alt="Enemy" />
+        <div class="stats">
+          HP: <span id="enemyHP">100</span><br />
+          Attack: 12
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
