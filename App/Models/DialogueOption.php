@@ -74,11 +74,11 @@ class DialogueOption
     }
 
     // Insert function
-    public static function insert($dialogue_id, $text, $next_dialogue_id, $next_chapter_id)
+    public static function insert($dialogue_id, $text, $next_dialogue_id)
     {
         DB::query(
-            "INSERT INTO dialogue_options (dialogue_id, text, next_dialogue_id, next_chapter_id) VALUES (?, ?, ?, ?)",
-            [$dialogue_id, $text, $next_dialogue_id, $next_chapter_id]
+            "INSERT INTO dialogue_options (dialogue_id, text, next_dialogue_id) VALUES (?, ?, ?)",
+            [$dialogue_id, $text, $next_dialogue_id]
         );
     }
 }

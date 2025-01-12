@@ -17,7 +17,7 @@
                 <div class="file-options-meta-data">
                     <span>File <?= $index + 1 ?></span> <span>1-11-2025</span>
                 </div>
-                <span class="mb-1"><b><?= $character->getName() ?></b> </span>
+                <span class="mb-1"><b><?= $character->getName() ?> - Clase: <?= $character->getCharacterClassName() ?></b> </span>
                 <span class="text-sm">Current Chapter: <?= $character->getCurrentChapter() ?></span>
             </div>
         <?php endforeach; ?>

@@ -24,21 +24,25 @@ class GameFilesController extends BaseController
 
     public function saveGame(Request $request)
     {
-        // Simulating a successful save response
         $data = $request->getBody();
-        //TODO: Implement character update method
 
-        // Update Character Progress
-        // $dialogue = Dialogue::findById($data['current_dialogue_node']);
-        // Character::update($character_id = 1, $current_chapter, $current_dialogue_node);
+        try {
+            $dialogue = Dialogue::findFirstDialogueOfChapter($data['current_chapter']);
+            $character = Character::getCharacterByID($data['character_id']);
+            $character->update($dialogue['chapter_id'], $dialogue['id']);
+        } catch (\Throwable $th) {
+            return Response::error($th);
+        }
 
-        // Instead of returning a response, I might need to actually return a view, the same loadChpater
-        // $response = [
-        //     'status' => 'success',
-        //     'message' => 'Game progress saved!',
-        //     'data' => $data
-        // ];
+        $response = [
+            'status' => 'success',
+            'message' => 'Game progress saved!',
+            'chapter_id' => $character->getCurrentChapter(),
+            'character_id' => $character->getId(),
+            // 'request' => $data, For debug purposses
+            'next_dialogue_id' => $dialogue['id']
+        ];
 
-        // Response::json($response); // Send JSON response for saving game
+        Response::json($response);
     }
 }

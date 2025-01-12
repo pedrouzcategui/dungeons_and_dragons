@@ -8,7 +8,6 @@ class ChapterController
 
     public function show($id)
     {
-        $chapter = Chapter::find($id);
         // I will need to return a view here most probably.
     }
 }

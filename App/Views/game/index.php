@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <h2>Chapter N: REPLACE</h2>
     <div id="dialog-container">
         <!-- Dialog text will appear here -->
     </div>

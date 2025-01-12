@@ -30,16 +30,17 @@ class API {
     }
   }
 
-  static async put(url, data) {
+  static async put(url, body) {
     try {
       const response = await fetch(this.BASE_URL + url, {
         method: "PUT",
-        body: JSON.stringify(data),
+        body: JSON.stringify(body),
         headers: {
           "Content-Type": "application/json",
         },
       });
-      return response;
+      const data = await response.json();
+      return data;
     } catch (error) {
       console.error(error);
     }

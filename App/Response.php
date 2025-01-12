@@ -26,4 +26,27 @@ class Response
         // End script execution
         exit();
     }
+
+    /**
+     * Send a JSON error response
+     *
+     * @param string $message The error message
+     * @param int $status The HTTP status code (default: 400)
+     * @param array $context Additional context for the error (default: [])
+     * @param bool $prettyPrint Whether to format the JSON for readability (default: false)
+     */
+    public static function error(string $message, int $status = 400, array $context = [], bool $prettyPrint = false)
+    {
+        $errorResponse = [
+            'error' => true,
+            'message' => $message,
+            'status' => $status,
+        ];
+
+        if (!empty($context)) {
+            $errorResponse['context'] = $context;
+        }
+
+        self::json($errorResponse, $status, $prettyPrint);
+    }
 }

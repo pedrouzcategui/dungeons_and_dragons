@@ -1,7 +1,10 @@
 document.addEventListener("DOMContentLoaded", async function () {
   const character_id = parseInt(localStorage.getItem("character_id"));
-  const dialogData = await API.get(`/api/game/${character_id}`);
-  let currentDialogId = 1; // Starting dialog
+  const { dialog: dialogData, character } = await API.get(
+    `/api/game/${character_id}`
+  );
+  let currentDialogNode = null; // To track the current dialog object
+  console.log(dialogData);
 
   const dialogContainer = document.getElementById("dialog-container");
   const choicesContainer = document.getElementById("choices-container");
@@ -30,14 +33,34 @@ document.addEventListener("DOMContentLoaded", async function () {
    */
   function renderNextChapterButton() {
     createButton("Next Chapter", async () => {
-      const save = await API.put("/api/save-game", {
-        character_id,
-        current_chapter: 2,
-        current_dialogue_node: currentDialogId,
-      });
-      // If save is successful, redirect
-      window.location.href = "game";
-      // Add logic to load the next chapter
+      try {
+        const save = await API.put("/api/save-game", {
+          character_id,
+          current_chapter: currentDialogNode.next_chapter_id,
+          current_dialogue_node: currentDialogNode.id, // Save the last node of the current chapter
+        });
+        console.log("Game progress saved:", save);
+        // Redirect to the game or next chapter
+        window.location.href = "game"; // Modify the URL if needed
+      } catch (error) {
+        console.error("Failed to save game progress:", error);
+      }
+    });
+  }
+
+  /**
+   * Handles rendering the next button when no choices are available.
+   */
+  function renderNextButton() {
+    createButton("Next", () => {
+      const nextDialog = dialogData.find(
+        (d) => d.id === currentDialogNode.id + 1
+      );
+      if (nextDialog) {
+        renderDialog(nextDialog.id);
+      } else {
+        console.error("Next dialog not found");
+      }
     });
   }
 
@@ -47,28 +70,33 @@ document.addEventListener("DOMContentLoaded", async function () {
    */
   function renderDialog(dialogId) {
     clearChoices();
-    const dialog = dialogData.find((d) => d.id === dialogId);
-
-    if (!dialog) {
+    currentDialogNode = dialogData.find((d) => d.id === dialogId); // Update the current dialog node
+    console.log(currentDialogNode);
+    if (!currentDialogNode) {
       console.error(`Dialog with ID ${dialogId} not found`);
       return;
     }
 
-    dialogContainer.textContent = dialog.text;
+    dialogContainer.textContent = currentDialogNode.text;
 
-    if (dialog.is_final) {
+    if (currentDialogNode.is_final) {
       renderNextChapterButton();
       return; // Exit if final dialog
     }
 
-    (dialog.choices || []).forEach((choice) => {
-      createButton(choice.description, () => {
-        currentDialogId = choice.nextDialogId;
-        renderDialog(choice.nextDialogId);
+    console.log(currentDialogNode.choices);
+
+    if (currentDialogNode.choices && currentDialogNode.choices.length > 0) {
+      currentDialogNode.choices.forEach((choice) => {
+        createButton(choice.description, () => {
+          renderDialog(choice.nextDialogId);
+        });
       });
-    });
+    } else {
+      renderNextButton();
+    }
   }
 
   // Initialize the dialog system
-  renderDialog(currentDialogId);
+  renderDialog(character.current_dialog_node_id);
 });

@@ -52,16 +52,14 @@ class Chapter
 
     public static function getAll()
     {
-        $chapters = DB::query('SELECT * FROM chapters');
-        return $chapters;
+        return DB::query('SELECT * FROM chapters');
     }
 
-    public static function find($chapter_id)
+    public static function insert($name, $description)
     {
-        $chapter = DB::query('SELECT * FROM chapters WHERE id = ?', [$chapter_id]);
-        $dialogue = DB::query('SELECT * FROM dialogue WHERE chapter_id = ?', [$chapter_id]);
-        $options = DB::query('SELECT * FROM options WHERE chapter_id = ?', [$chapter_id]);
-
-        // Return JSON of dialogue and options
+        DB::query(
+            "INSERT INTO chapters (name, description) VALUES (?, ?)",
+            [$name, $description]
+        );
     }
 }
