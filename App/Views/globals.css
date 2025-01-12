@@ -1,0 +1,20 @@
+button {
+  padding: 10px 20px;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.text-sm {
+  font-size: 14px;
+}
+
+.mb-1 {
+  margin-bottom: 10px;
+}
+
+.my-2 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

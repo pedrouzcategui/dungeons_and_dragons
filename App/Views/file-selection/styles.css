@@ -1,0 +1,72 @@
+/* Main Body Styling */
+body {
+  font-family: "Arial", sans-serif;
+  background: linear-gradient(to bottom, #001848, #000814);
+  color: white;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+/* Title Styling */
+h1 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  text-shadow: 2px 2px 4px #000;
+}
+
+/* Save File Panel Container */
+.save-files-container {
+  background: rgba(0, 0, 40, 0.8);
+  border: 3px solid #00aaff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Save File Option */
+.file-option {
+  position: relative;
+  background: linear-gradient(to right, #002850, #004080);
+  color: white;
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+  padding: 10px;
+  max-height: 100px;
+  border: 2px solid #0066cc;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-shadow: 1px 1px 3px #000;
+}
+
+.file-option span {
+  display: block;
+}
+
+.file-option:hover {
+  background: linear-gradient(to right, #004080, #0050a0);
+  border-color: #00aaff;
+}
+
+.file-options-meta-data {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Footer Instructions */
+.footer-instructions {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  text-shadow: 1px 1px 3px #000;
+  color: #aaddff;
+}
+
+.active {
+  border-color: yellow !important;
+}
