@@ -51,11 +51,11 @@ class Dialogue
     }
 
     // Insert a new dialogue
-    public static function insert($is_character, $character_name, $chapter_id, $next_chapter_id, $text, $is_decision, $is_final)
+    public static function insert($is_character, $character_name, $chapter_id, $next_chapter_id, $text, $is_decision, $is_final, $is_ending = FALSE, $ending_id = NULL)
     {
         DB::query(
-            "INSERT INTO dialogue (is_character, character_name, chapter_id, next_chapter_id, text, is_decision, is_final) VALUES(?, ?, ?, ?, ?, ?, ?)",
-            [$is_character, $character_name, $chapter_id, $next_chapter_id, $text, $is_decision, $is_final]
+            "INSERT INTO dialogue (is_character, character_name, chapter_id, next_chapter_id, text, is_decision, is_final, is_ending, ending_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            [$is_character, $character_name, $chapter_id, $next_chapter_id, $text, $is_decision, $is_final, $is_ending, $ending_id]
         );
     }
 
@@ -105,6 +105,8 @@ class Dialogue
                 'name' => $dialogue['is_character'] ? $dialogue['character_name'] : 'Narrator',
                 'text' => $dialogue['text'],
                 'is_final' => (bool)$dialogue['is_final'],
+                'is_ending' => (bool)$dialogue['is_ending'],
+                'ending_id' => $dialogue['ending_id'],
                 'next_chapter_id' => $dialogue['next_chapter_id'],
                 'choices' => array_values($choices) // Reset keys for proper JSON encoding
             ];

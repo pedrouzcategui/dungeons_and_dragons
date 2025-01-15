@@ -7,20 +7,32 @@ CREATE TABLE chapters (
   id INT AUTO_INCREMENT,
   name VARCHAR(255),
   description TEXT,
+  background_image_name TEXT,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE classes (
   id INT AUTO_INCREMENT,
   name VARCHAR(255),
+  attack INT,
+  defense INT,
+  luck INT,
+  honor INT,
   PRIMARY KEY (id)
 );
 
+CREATE TABLE items (
+  id INT AUTO_INCREMENT,
+  name TEXT,
+  image_name TEXT,
+  PRIMARY KEY (id)
+);
 
 CREATE TABLE endings (
     id INT AUTO_INCREMENT,
     name VARCHAR(255),
     description TEXT,
+    image_name TEXT,
     PRIMARY KEY (id)
 );
 
@@ -35,6 +47,8 @@ CREATE TABLE dialogue (
   is_final BOOLEAN DEFAULT FALSE,
   is_ending BOOLEAN DEFAULT FALSE,
   ending_id INT DEFAULT NULL,
+  is_dice_throw BOOLEAN DEFAULT FALSE,
+  is_reward BOOLEAN DEFAULT FALSE,
   PRIMARY KEY (id),
   FOREIGN KEY (chapter_id) REFERENCES chapters(id),
   FOREIGN KEY (next_chapter_id) REFERENCES chapters(id),
@@ -57,11 +71,51 @@ CREATE TABLE characters (
   name VARCHAR(255),
   current_chapter INT,
   current_dialogue_node INT,
+  is_game_completed BOOLEAN DEFAULT FALSE,
+  ending_id INT DEFAULT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (class_id) REFERENCES classes(id),
   FOREIGN KEY (current_chapter) REFERENCES chapters(id),
-  FOREIGN KEY (current_dialogue_node) REFERENCES dialogue(id)
+  FOREIGN KEY (current_dialogue_node) REFERENCES dialogue(id),
+  FOREIGN KEY (ending_id) REFERENCES endings(id)
 );
+
+-- TODO FOR TODAY::
+
+CREATE TABLE dialogue_dice_throws (
+  id INT AUTO_INCREMENT,
+  dialogue_id INT,
+  next_dialogue_id INT,
+  dice_threshold BOOLEAN DEFAULT NULL,
+  next_dialogue_id_if_threshold_exceeded INT DEFAULT NULL,
+  next_dialogue_id_if_threshold_failed INT DEFAULT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (dialogue_id) REFERENCES dialogue(id),
+  FOREIGN KEY (next_dialogue_id) REFERENCES dialogue(id),
+  FOREIGN KEY (next_dialogue_id_if_threshold_exceeded) REFERENCES dialogue(id),
+  FOREIGN KEY (next_dialogue_id_if_threshold_failed) REFERENCES dialogue(id)
+);
+
+CREATE TABLE rewards (
+  id INT AUTO_INCREMENT,
+  dialogue_id INT,
+  is_item BOOLEAN DEFAULT FALSE,
+  item_id INT,
+  PRIMARY KEY (id),
+  FOREIGN KEY (dialogue_id) REFERENCES dialogue(id),
+  FOREIGN KEY (item_id) REFERENCES items(id)
+);
+
+CREATE TABLE character_items (
+  id INT AUTO_INCREMENT,
+  character_id INT,
+  item_id INT,
+  PRIMARY KEY (id),
+  FOREIGN KEY (character_id) REFERENCES characters(id),
+  FOREIGN KEY (item_id) REFERENCES items(id)
+);
+
+-- TODO FOR TODAY (END) 
 
 CREATE TABLE character_stats (
     id INT AUTO_INCREMENT,
@@ -75,36 +129,7 @@ CREATE TABLE character_stats (
     FOREIGN KEY (character_id) REFERENCES characters(id)
 );
 
-
-
 -- Seed Classes
 INSERT INTO classes (name) VALUES ('Knight');
 INSERT INTO classes (name) VALUES ('Archer');
 INSERT INTO classes (name) VALUES ('Mage');
-
--- -- Seed Chapters
-
--- -- Seed Chapter 1
--- INSERT INTO chapters (name, description) VALUES ('Chapter 1', 'The beginning of your journey.');
-
--- -- Seed Dialogue for Chapter 1
--- INSERT INTO dialogue (chapter_id, is_character, character_name, text, is_decision)
--- VALUES
--- (1, FALSE, 'Narrator', 'What do you want to eat?', TRUE), -- Dialogue 1
--- (1, FALSE, 'Narrator', 'Great! I will serve you beans.', FALSE), -- Dialogue 2
--- (1, FALSE, 'Narrator', 'Great! I will serve you eggs.', FALSE); -- Dialogue 3
-
--- -- Seed Options for Dialogue 1
--- INSERT INTO dialogue_options (dialogue_id, text, next_dialogue_id)
--- VALUES
--- (1, 'Beans', 2), -- Option 1: Leads to Dialogue 2
--- (1, 'Eggs', 3);  -- Option 2: Leads to Dialogue 3
-
--- -- Continue with Chapter 2 to complete the story
--- INSERT INTO chapters (name, description) VALUES ('Chapter 2', 'A reflection of your choices.');
-
--- -- Seed Dialogue for Chapter 2
--- INSERT INTO dialogue (chapter_id, is_character, character_name, text, is_decision, is_final)
--- VALUES
--- (2, FALSE, 'Narrator', 'So you ate beans!', FALSE, TRUE), -- Dialogue 4
--- (2, FALSE, 'Narrator', 'So you ate eggs!', FALSE, TRUE); -- Dialogue 5

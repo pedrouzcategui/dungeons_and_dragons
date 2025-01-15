@@ -1,0 +1,43 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("http://localhost/dungeons_and_dragons/assets/images/main-screen-background.webp")
+    no-repeat center center fixed;
+  background-size: cover;
+  color: white;
+  text-shadow: 2px 2px 4px #000;
+}
+
+.main-screen {
+  text-align: center;
+}
+
+.main-screen h1 {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.main-screen button {
+  font-size: 1.5rem;
+  padding: 0.7rem 2rem;
+  border: 2px solid #8b0000;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #5d0000, #8b0000);
+  color: #f5f5dc;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+  font-family: "Cinzel", serif; /* Matching button font style */
+  text-transform: uppercase;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+  margin-bottom: 10px;
+}
+
+.main-screen button:hover {
+  transform: scale(1.1);
+  background: linear-gradient(145deg, #8b0000, #b22222);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+}

@@ -1,0 +1,89 @@
+/* General Styles */
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #331701;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Form Container */
+form {
+  background: linear-gradient(145deg, #3b1101, #5c2121);
+  border-radius: 15px;
+  padding: 30px 40px;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+/* Title */
+h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+/* Form Group Styling */
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+/* Label Styling */
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+/* Input Field */
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+  outline: none;
+}
+
+/* Role Options */
+.role-options {
+  display: flex;
+  justify-content: space-around;
+}
+
+.role-options label {
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+input[type="radio"] {
+  margin-right: 5px;
+}
+
+/* Button Styling */
+button {
+  background-color: #ff8c42;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #e37636;
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(1px);
+}

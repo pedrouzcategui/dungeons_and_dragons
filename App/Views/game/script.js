@@ -1,13 +1,29 @@
 document.addEventListener("DOMContentLoaded", async function () {
   const character_id = parseInt(localStorage.getItem("character_id"));
-  const { dialog: dialogData, character } = await API.get(
-    `/api/game/${character_id}`
-  );
+  const image_div = document.getElementById("chapter_image");
+  const {
+    dialog: dialogData,
+    character,
+    chapter,
+  } = await API.get(`/api/game/${character_id}`);
+
+  function loadBackgroundImage(chapterId) {
+    image_div.style.backgroundImage = `url('http://localhost/dungeons_and_dragons/assets/images/chapters/chapter-${chapterId}.webp')`;
+    image_div.style.backgroundSize = "cover";
+  }
+
+  loadBackgroundImage(chapter.id);
+
+  let characterNameSpan = document.getElementById("character_name");
   let currentDialogNode = null; // To track the current dialog object
-  console.log(dialogData);
 
   const dialogContainer = document.getElementById("dialog-container");
   const choicesContainer = document.getElementById("choices-container");
+  const chapterNameSpan = document.getElementById("chapter_title");
+  const chapterIdSpan = document.getElementById("chapter_id");
+
+  chapterIdSpan.innerText = chapter.id;
+  chapterNameSpan.innerText = chapter.title;
 
   /**
    * Clears the choices container.
@@ -49,6 +65,25 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
   /**
+   * Renders the ending button and handles the API call for the ending.
+   */
+  function renderEndingButton() {
+    createButton("End", async () => {
+      try {
+        await API.post("/api/ending", {
+          character_id,
+          ending_id: currentDialogNode.ending_id,
+        });
+        console.log("Ending saved successfully.");
+        const endingUrl = `ending`;
+        window.location.href = endingUrl;
+      } catch (error) {
+        console.error("Failed to save ending:", error);
+      }
+    });
+  }
+
+  /**
    * Handles rendering the next button when no choices are available.
    */
   function renderNextButton() {
@@ -71,6 +106,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   function renderDialog(dialogId) {
     clearChoices();
     currentDialogNode = dialogData.find((d) => d.id === dialogId); // Update the current dialog node
+    characterNameSpan.innerHTML = currentDialogNode.name;
     console.log(currentDialogNode);
     if (!currentDialogNode) {
       console.error(`Dialog with ID ${dialogId} not found`);
@@ -78,6 +114,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     dialogContainer.textContent = currentDialogNode.text;
+
+    if (currentDialogNode.is_ending) {
+      renderEndingButton();
+      return; // Exit if ending dialog
+    }
 
     if (currentDialogNode.is_final) {
       renderNextChapterButton();

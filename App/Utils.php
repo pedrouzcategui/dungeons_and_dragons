@@ -18,4 +18,10 @@ class Utils
     {
         header('Location: ' . $url, true, $statusCode);
     }
+
+    //**This function get images, path is related to the assets/images folder */
+    public static function getImagePath($path)
+    {
+        return "http://localhost/dungeons_and_dragons/assets/images/$path";
+    }
 }

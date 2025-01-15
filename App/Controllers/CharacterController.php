@@ -1,12 +1,11 @@
 <?php
 
-//TODO: What are namespaces?
 namespace App\Controllers;
 
-//TODO: Why do you use namespaces like this?
 use App\Views\View;
 use App\Request;
 use App\Models\Character;
+use App\Response;
 use App\Utils;
 
 class CharacterController extends BaseController
@@ -33,6 +32,20 @@ class CharacterController extends BaseController
             Utils::prettyDump($th);
             echo "Error creating character";
             die();
+        }
+    }
+
+    public function delete(Request $request)
+    {
+        $character_id = $request->getParam('id');
+        try {
+            Character::deleteById($character_id);
+            return Response::json([
+                'success' => true,
+                'message' => "The character with id $character_id was deleted successfully."
+            ]);
+        } catch (\Throwable $th) {
+            return Response::error($th);
         }
     }
 }

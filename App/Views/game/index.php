@@ -5,16 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dialog System</title>
-    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <h2>Chapter N: REPLACE</h2>
-    <div id="dialog-container">
-        <!-- Dialog text will appear here -->
+    <div id="chapter_image">
+
     </div>
-    <div id="choices-container">
-        <!-- Choice buttons will appear here -->
+    <div id="dialog" class="dialog">
+        <h2 id="title">Chapter #<span id="chapter_id"></span>: <span id="chapter_title"></span> </h2>
+        <span class="my-2 block italic bold" id="character_name"></span>
+        <div id="dialog-container"></div>
+        <div id="choices-container"></div>
     </div>
     <script src="script.js"></script>
 </body>

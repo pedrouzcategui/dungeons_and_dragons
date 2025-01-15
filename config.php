@@ -1,0 +1,1 @@
+// Define constants and require them, such as the URL (this one is very useful actually)

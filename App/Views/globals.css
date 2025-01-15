@@ -1,5 +1,21 @@
+* {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
 button {
   padding: 10px 20px;
+}
+
+.text-white {
+  color: white;
+}
+
+.underline {
+  text-decoration: underline;
 }
 
 .w-full {
@@ -17,4 +33,16 @@ button {
 .my-2 {
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+.block {
+  display: block;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.bold {
+  font-weight: bold;
 }

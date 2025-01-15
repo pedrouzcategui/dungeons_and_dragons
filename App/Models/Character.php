@@ -4,18 +4,23 @@ namespace App\Models;
 
 use App\Database as DB;
 use App\Utils;
+use App\Models\BaseModel;
 use App\Models\CharacterClass;
+use App\Response;
+use Error;
 
-class Character
+class Character extends BaseModel
 {
     private $id;
     private $name;
     private $class_id;
     // Default chapter for new characters
-    private $chapter = 1;
-    private $dialogue_node = 1;
+    private $chapter;
+    private $dialogue_node;
+    private $is_game_completed;
+    private $ending_id;
 
-    function __construct($id, $name, $class, $chapter = 1, $dialogue_node = 1)
+    function __construct($id, $name, $class, $chapter = 1, $dialogue_node = 1, $is_game_completed = FALSE, $ending_id = NULL)
     {
         //Using setters in construct
         $this->setId($id);
@@ -23,6 +28,8 @@ class Character
         $this->setClass($class);
         $this->setChapter($chapter);
         $this->setDialogueNode($dialogue_node);
+        $this->setIsGameCompleted($is_game_completed);
+        $this->setEndingId($ending_id);
     }
 
     // Getters
@@ -46,6 +53,14 @@ class Character
     {
         return $this->dialogue_node;
     }
+    public function getIsGameCompleted()
+    {
+        return $this->is_game_completed;
+    }
+    public function getEndingId()
+    {
+        return $this->ending_id;
+    }
 
     // Setters
     public function setId($id)
@@ -68,12 +83,32 @@ class Character
     {
         $this->dialogue_node = $dialogue_node;
     }
+    public function setIsGameCompleted($isCompleted)
+    {
+        $this->is_game_completed = $isCompleted;
+    }
+    public function setEndingId($endingId)
+    {
+        $this->ending_id = $endingId;
+    }
 
     // Utils
     public static function getCharacterByID($id)
     {
-        $result = DB::query("SELECT * FROM characters WHERE id = $id");
-        return new self($result[0]['id'], $result[0]['name'], $result[0]['class_id'], $result[0]['current_chapter'], $result[0]['current_dialogue_node']);
+        try {
+            $result = DB::query("SELECT * FROM characters WHERE id = $id")[0];
+            return new self(
+                $result['id'],
+                $result['name'],
+                $result['class_id'],
+                $result['current_chapter'],
+                $result['current_dialogue_node'],
+                $result['is_game_completed'],
+                $result['ending_id']
+            );
+        } catch (\Throwable $th) {
+            Response::error($th);
+        }
     }
 
     public static function findById($id)
@@ -91,14 +126,26 @@ class Character
         return $result;
     }
 
-    public function update($currentChapter, $currentDialogueNode)
+    public function update($currentChapter, $currentDialogueNode, $is_game_completed = FALSE, $ending_id = NULL)
     {
         $this->setChapter($currentChapter);
         $this->setDialogueNode($currentDialogueNode);
+        $this->setIsGameCompleted($is_game_completed);
+        $this->setEndingId($ending_id);
 
         // Update the database record
-        $query = "UPDATE characters SET current_chapter = ?, current_dialogue_node = ? WHERE id = ?";
-        return DB::query($query, [$this->chapter, $this->dialogue_node, $this->id]);
+        $query = "UPDATE characters SET current_chapter = ?, current_dialogue_node = ?, is_game_completed = ?, ending_id = ? WHERE id = ?";
+        return DB::query($query, [$this->getCurrentChapter(), $this->getDialogueNode(), $this->getIsGameCompleted(), $this->getEndingId(), $this->id]);
+    }
+
+    public static function deleteById($id)
+    {
+        try {
+            $query = "DELETE FROM characters WHERE id = ?";
+            return DB::query($query, [$id]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     public static function getAll()
@@ -106,7 +153,7 @@ class Character
         $result = DB::query("SELECT * FROM characters ORDER BY id ASC");
         $characters = [];
         foreach ($result as $character) {
-            array_push($characters, new self($character['id'], $character['name'], $character['class_id'], $character['current_chapter']));
+            array_push($characters, new self($character['id'], $character['name'], $character['class_id'], $character['current_chapter'], $character['current_dialogue_node'], $character['is_game_completed'], $character['ending_id']));
         }
         return $characters;
     }
@@ -114,5 +161,18 @@ class Character
     public function getCharacterClassName()
     {
         return CharacterClass::findById($this->getClassId())->getName();
+    }
+
+    public function toObject()
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'class_id' => $this->getClassId(),
+            'chapter' => $this->getCurrentChapter(),
+            'dialogue_node' => $this->getDialogueNode(),
+            'is_game_completed' => $this->getIsGameCompleted(),
+            'ending_id' => $this->getEndingId()
+        ];
     }
 }

@@ -3,25 +3,22 @@
 namespace App\Models;
 
 use App\Database as DB;
-use App\Utils;
 
-class Chapter
+class Ending
 {
     private $id;
     private $title;
     private $description;
-    private $background_image_name;
+    private $image_name;
 
-    // Constructor
-    public function __construct($id, $title, $description, $background_image_name = null)
+    public function __construct($id, $title, $description, $image_name = null)
     {
         $this->setId($id);
         $this->setTitle($title);
         $this->setDescription($description);
-        $this->setBackgroundImageName($background_image_name);
+        $this->setImageName($image_name);
     }
 
-    // Getters
     public function getId()
     {
         return $this->id;
@@ -36,12 +33,12 @@ class Chapter
     {
         return $this->description;
     }
-    public function getBackgroundImageName()
+
+    public function getImageName()
     {
-        return $this->background_image_name;
+        return $this->image_name;
     }
 
-    // Setters
     public function setId($id)
     {
         $this->id = $id;
@@ -56,9 +53,10 @@ class Chapter
     {
         $this->description = $description;
     }
-    public function setBackgroundImageName($image_name)
+
+    public function setImageName($image_name)
     {
-        $this->background_image_name = $image_name;
+        $this->image_name = $image_name;
     }
 
     public static function getAll()
@@ -66,31 +64,30 @@ class Chapter
         return DB::query('SELECT * FROM chapters');
     }
 
-    public static function findById($id)
-    {
-        $result = DB::query('SELECT * FROM chapters WHERE id = ?', [$id]);
-        if (count($result) > 0) {
-            $row = $result[0];
-            return new self($row['id'], $row['name'], $row['description'], $row['background_image_name']);
-        }
-        return null;
-    }
-
-    public static function insert($name, $description, $background_image_name = null)
+    public static function insert($name, $description, $image_name = null)
     {
         DB::query(
-            "INSERT INTO chapters (name, description, background_image_name) VALUES (?, ?, ?)",
-            [$name, $description, $background_image_name]
+            "INSERT INTO endings (name, description, image_name) VALUES (?, ?, ?)",
+            [$name, $description, $image_name]
         );
     }
 
+    public static function getById($id)
+    {
+        $result = DB::query('SELECT * FROM endings WHERE id = ?', [$id]);
+        if (count($result) > 0) {
+            $row = $result[0];
+            return new self($row['id'], $row['name'], $row['description'], $row['image_name']);
+        }
+        return null;
+    }
     public function toObject()
     {
         return [
             'id' => $this->getId(),
             'title' => $this->getTitle(),
             'description' => $this->getDescription(),
-            'background_image_url_name' => $this->getBackgroundImageName(),
+            'image_name' => $this->getImageName()
         ];
     }
 }

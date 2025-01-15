@@ -4,7 +4,7 @@ require_once 'autoloader.php';
 require_once 'routes.php';
 
 // Maybe just in DEBUG
-// header('Pragma: no-cache');
+header('Pragma: no-cache');
 
 use App\Utils;
 

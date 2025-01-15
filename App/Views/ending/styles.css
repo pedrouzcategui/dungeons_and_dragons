@@ -1,0 +1,40 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.ending-screen {
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.ending-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: end;
+  width: 100%;
+  padding: 50px;
+  text-align: left;
+  color: white;
+  background: url("http://localhost/dungeons_and_dragons/assets/images/textures/stone-wall.jpg");
+  background-size: cover;
+}
+
+.ending-info h1 {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  text-decoration: underline;
+}
+
+.ending-info p {
+  text-align: left;
+}

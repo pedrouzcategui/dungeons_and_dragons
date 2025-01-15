@@ -51,9 +51,22 @@ class API {
       const response = await fetch(this.BASE_URL + url, {
         method: "DELETE",
       });
-      return response;
+      const data = await response.json();
+      return data;
     } catch (error) {
       console.error(error);
     }
+  }
+}
+
+class Dice {
+  // Static method to simulate a random dice throw between 1 and 20
+  static randomThrow() {
+    return Math.floor(Math.random() * 20) + 1;
+  }
+
+  // Static method to return a fixed value for debugging
+  static fixedThrow(value) {
+    return value;
   }
 }
