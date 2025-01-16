@@ -85,13 +85,11 @@ CREATE TABLE characters (
 CREATE TABLE dialogue_dice_throws (
   id INT AUTO_INCREMENT,
   dialogue_id INT,
-  next_dialogue_id INT,
   dice_threshold BOOLEAN DEFAULT NULL,
   next_dialogue_id_if_threshold_exceeded INT DEFAULT NULL,
   next_dialogue_id_if_threshold_failed INT DEFAULT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (dialogue_id) REFERENCES dialogue(id),
-  FOREIGN KEY (next_dialogue_id) REFERENCES dialogue(id),
   FOREIGN KEY (next_dialogue_id_if_threshold_exceeded) REFERENCES dialogue(id),
   FOREIGN KEY (next_dialogue_id_if_threshold_failed) REFERENCES dialogue(id)
 );

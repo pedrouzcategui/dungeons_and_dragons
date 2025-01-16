@@ -2,10 +2,13 @@
 
 namespace App\Controllers;
 
+use App\Database as DB;
 use App\Models\Chapter;
 use App\Models\Dialogue;
 use App\Models\DialogueOption;
+use App\Models\DialogueDiceThrow;
 use App\Models\Ending;
+use App\Response;
 
 class SeedController
 {
@@ -94,38 +97,45 @@ class SeedController
             // #17
             Dialogue::insert(FALSE, "Narrator", 3, NULL, "Muy bien, te las arreglaste para llegar a la sala central del castillo. Sin embargo, hay 4 guardias que están cubriendo las escaleras del castillo, las cuales debes subir. ¿Qué decides hacer?", TRUE, FALSE);
 
-            // Lanzar una piedra para distraerlos (tirada de dados)
-            // Enfrentarte a ellos (tirada de dados)
+            // Lanzar una piedra para distraerlos (tirada de dados)-> #18
+            // Enfrentarte a ellos (tirada de dados) -> #21
 
-            // #18 - Lanzar una piedra (exitoso)
+            // Lanzar una piedra para distraerlos (tirada de dados)
+            // #18
+            Dialogue::insert(FALSE, "Narrator", 3, NULL, "Decides lanzar una piedra. Lanza el dado y obtén más de 8 para avanzar.", FALSE, FALSE, FALSE, NULL, TRUE, FALSE);
+
+            // #19 - Lanzar una piedra (exitoso)
             Dialogue::insert(FALSE, "Narrator", 3, 4, "Tu piedra creo una buena distracción! Lograste distraer a los guardias y llegaste a la iglesia.", FALSE, TRUE);
 
-            // #19 - Lanzar una piedra (fallido)
+            // #20 - Lanzar una piedra (fallido)
             Dialogue::insert(FALSE, "Narrator", 3, NULL, "Oh no, tu distracción no funcionó, los guardias te encontraron. ¿Que harás?", TRUE, FALSE);
 
             // Pelear (tirada de dados)
             // Rendirse (bad ending)
 
-            // #20 - Lanzar una piedra (fallido) - Pelear (exito)
-            Dialogue::insert(FALSE, "Narrator", 3, 4, "Lograste acabar con los guardias! Eres muy hábil, has obtenido una armadura que te incrementa la defensa por 100 puntos, y has conseguido un {{ARMA DE CLASE}} que aumenta tu ataque por 100!", FALSE, TRUE);
+            // #21 Pelear (tirada de dados)
+            Dialogue::insert(FALSE, "Narrator", 3, NULL, "Decides pelear con los soldados, debes obtener más de 10 para avanzar.", FALSE, FALSE, FALSE, NULL, TRUE, FALSE);
 
-            // #21 - Lanzar una piedra (fallido) - Pelear (fallido)
+            // #22 - Lanzar una piedra (fallido) - Pelear (exito)
+            Dialogue::insert(FALSE, "Narrator", 3, 4, "Lograste acabar con los guardias! Eres muy hábil, has obtenido una armadura que te incrementa la defensa por 100 puntos, y has conseguido un {{ARMA DE CLASE}} que aumenta tu ataque por 100 puntos!", FALSE, TRUE);
+
+            // #23 - Lanzar una piedra (fallido) - Pelear (fallido)
             Dialogue::insert(FALSE, "Narrator", 3, 4, "No puedes pelear más, has sido herido, te han quitado 50 puntos de vida. Pero logras llegar a la iglesia.", FALSE, TRUE);
 
-            // #22 - Lanzar una piedra (fallido) - Rendirse (ENDING 2)
+            // #24 - Lanzar una piedra (fallido) - Rendirse (ENDING 2)
             Dialogue::insert(FALSE, "Narrator", 3, NULL, "Te rendiste, y tu ejecución fue movida para hoy. Estás en la guillotina, mirando a la luz del sol, y de repente, todo se ve negro.", FALSE, TRUE, TRUE, 2);
 
-            // #23 - Enfrentarse a ellos (dice throw)
-            Dialogue::insert(FALSE, "Narrator", 3, NULL, "Decides enfrentarte a ellos, pero necesitas mucha suerte para vencerlos", FALSE, FALSE);
+            // #25 - Enfrentarse a ellos (dice throw)
+            Dialogue::insert(FALSE, "Narrator", 3, NULL, "Decides enfrentarte a ellos, pero necesitas mucha suerte para vencerlos, debes obtener un 15 o más para tener éxito.", FALSE, FALSE, FALSE, NULL, TRUE, FALSE);
 
-            // #24 - Enfrentarse a ellos (dice successful)
+            // #26 - Enfrentarse a ellos (dice successful)
             Dialogue::insert(FALSE, "Narrator", 3, 4, "Lograste vencerlos a todos, tu honor y tu defensa han aumentado por 50 puntos", FALSE, TRUE);
 
-            // #25 - Enfrentarse a ellos (dice incorrect) (Ending 3)
+            // #27 - Enfrentarse a ellos (dice incorrect) (Ending 3)
             Dialogue::insert(FALSE, "Narrator", 3, NULL, "Acabas de ser asesinado, no contaste con mucha suerte.", FALSE, TRUE, TRUE, 3);
 
             //Chapter 4
-            // #26
+            // #28
             Dialogue::insert(FALSE, "Narrator", 4, NULL, "Llegaste a la iglesia, está solo, y decides sentarte a descansar. Juntas tus manos y empiezas a rezar. ¿De qué se trata tu plegaria?", TRUE, FALSE);
 
             // Pedir más justicia
@@ -133,49 +143,49 @@ class SeedController
             // Pedir más misericordia
             // Pedir perdón
 
-            // #27 - Pedir Justicia
-            Dialogue::insert(FALSE, "Narrator", 4, 5, "Rezaste por justicia, tus puntos de vida y de defensa han aumentado por 20 puntos cada uno", FALSE, FALSE);
+            // #29 - Pedir Justicia
+            Dialogue::insert(FALSE, "Narrator", 4, 5, "Rezaste por justicia, tus puntos de vida y de defensa han aumentado por 20 puntos cada uno", FALSE, TRUE);
 
-            // #28 - Pedir Fuerza
+            // #30 - Pedir Fuerza
             Dialogue::insert(FALSE, "Narrator", 4, 5, "Rezaste por Fuerza, tus puntos de ataque y honor han aumentado por 20 puntos cada uno", FALSE, TRUE);
 
-            // #29 - Pedir Misericordia
+            // #31 - Pedir Misericordia
             Dialogue::insert(FALSE, "Narrator", 4, 5, "Rezaste por misericordia, tus puntos de vida y ataque han sido incrementados por 30 puntos cada uno", FALSE, TRUE);
 
-            // #30 - Pedir Perdon
+            // #32 - Pedir Perdon
             Dialogue::insert(FALSE, "Narrator", 4, 5, "Rezaste por perdón. Dios te mira desde el cielo y te ha bendecido con una armadura celestial. Tus puntos de vida, defensa, y ataque, aumentan por 100 cada uno.", FALSE, TRUE);
 
             //Chapter 5
-            // #31
+            // #33
             Dialogue::insert(TRUE, "Rey", 5, NULL, "Miren quién es... {{NAME}}... Acabas de cometer un error al venir acá.", FALSE, FALSE);
 
-            // #32
+            // #34
             Dialogue::insert(TRUE, "Rey", 5, NULL, "Verás, ser Rey no es fácil. A veces debes tomar decisiones que te llevarán a cometer actos atroces.", FALSE, FALSE);
 
-            // #33
+            // #35
             Dialogue::insert(TRUE, "Rey", 5, NULL, "Pero NADIE te felicita por las cosas que haces. Todo el mundo quiere vivir bien, todo el mundo quiere cosas, pero NADIE se preocupa por hacer algo y lograrlo. Ahora, porque yo logro las cosas, acaso no me merezco ser recompensado?", TRUE, FALSE);
 
             // No, porque debes hacer las cosas que sean mejores para el reino, no para tu bolsillo. -> 34
             // ... -> 38
 
-            // #34 - No Empathy
+            // #36 - No Empathy
             Dialogue::insert(TRUE, "Rey", 5, NULL, "Estás en el lado incorrecto de la historia, {{NAME}}. Nunca entenderás que no hay paz sin violencia. Te estoy dando la oportunidad para que tengas la vida que deseas, para que tengas todos los lujos que deseas... ¿Acaso no lo quieres?", TRUE, FALSE);
 
             // Ni muerto -> 35
             // .... -> 38
 
-            // #35 - No Empathy - Ni Muerto (dice throw)
+            // #37 - No Empathy - Ni Muerto (dice throw)
             Dialogue::insert(TRUE, "Rey", 5, NULL, "No me quedará otra cosa que hacer. Muere!", FALSE, FALSE);
 
-            // #36 - No Empathy - Ni Muerto (dice throw) (exito)
+            // #38 - No Empathy - Ni Muerto (dice throw) (exito)
             Dialogue::insert(TRUE, "Rey", 5, NULL, "No... como es posible... un tonto {{CLASE}} no puede matarme... *cough* *cough*...", FALSE, FALSE);
 
-            // #37 - Lo lograste, has asesinado al rey
+            // #39 - Lo lograste, has asesinado al rey
             Dialogue::insert(TRUE, "Narrator", 5, NULL, "Lo lograste, has asesinado al rey!!!", FALSE, FALSE, TRUE, 4);
 
             // Ending 4: Happy Kingdom
 
-            // #38 ...
+            // #40 ...
             Dialogue::insert(FALSE, "Rey", 5, NULL, "Piensalo, {{NAME}}, no te quise encerrar, eres de mis mejores soldados. Entiendo que quieras darle todas las riquezas a todas las personas. Pero no todos hacen el mismo sacrificio que tu para poder llevar el pan a su casa. Piensa en todas las cosas maravillosas que podrias tener.", FALSE, FALSE);
 
             // No, esto no esta bien.
@@ -184,15 +194,15 @@ class SeedController
             // - No Empathy - ... - Not correct (go to node of no empathy)
             // GOTO dialogue #
 
-            // #39 - No Empathy - ... - Forgiveness
+            // #41 - No Empathy - ... - Forgiveness
             Dialogue::insert(FALSE, "Rey", 5, NULL, "Nuestro imperio será increíble {{NAME}}.", FALSE, TRUE, TRUE, 5);
 
             // Ending 3 Corruption
 
-            // #40 - No Empathy - Ni Muerto (dice throw) (fallido)
+            // #42 - No Empathy - Ni Muerto (dice throw) (fallido)
             Dialogue::insert(FALSE, "Rey", 5, NULL, "No tuviste que haber venido, {{NAME}}.", FALSE, FALSE);
 
-            // #41 - No Empathy - Ni Muerto (dice throw) (fallido)
+            // #43 - No Empathy - Ni Muerto (dice throw) (fallido)
             Dialogue::insert(FALSE, "Rey", 5, NULL, "El rey te ha apuñalado en el estomago, estás sangrando demasiado, no puedes levantarte... es el fin... el rey logró derrotarte.", FALSE, FALSE, TRUE, 6);
 
             // Ending 4: Corruption continues
@@ -219,18 +229,18 @@ class SeedController
             DialogueOption::insert(14, "Dejar ir al soldado", 16);
 
 
-            // Cap 3
+            // Cap 3 (dice mechanics start here)
             DialogueOption::insert(17, "Lanzar una piedra para distraerlos", 18);
-            DialogueOption::insert(17, "Enfrentarte a ellos", 24);
+            DialogueOption::insert(17, "Enfrentarte a ellos", 25);
 
             DialogueOption::insert(19, "Pelear", 21);
-            DialogueOption::insert(19, "Rendirse", 22);
+            DialogueOption::insert(19, "Rendirse", 24);
 
             // Cap 4
-            DialogueOption::insert(26, "Justicia", 27);
-            DialogueOption::insert(26, "Fuerza", 28);
-            DialogueOption::insert(26, "Misericordia", 29);
-            DialogueOption::insert(26, "Perdon", 30);
+            DialogueOption::insert(26, "Justicia", 29);
+            DialogueOption::insert(26, "Fuerza", 30);
+            DialogueOption::insert(26, "Misericordia", 31);
+            DialogueOption::insert(26, "Perdon", 32);
 
             // Cap 5 
             DialogueOption::insert(33, "No, tu deber es mejorar el reino, no tu propia riqueza.", 34);
@@ -242,9 +252,29 @@ class SeedController
             DialogueOption::insert(38, "No, esto no esta bien", 40);
             DialogueOption::insert(38, "Tiene razon, mi rey.", 39);
 
+            // Dialogue Dice Throws
+            // #20 - Lanzar una piedra
+            DialogueDiceThrow::insert(18, 8, 19, 20);
+
+            // #21 - Lanzar una piedra (fallido) -> Pelear con guardias/soldados
+            DialogueDiceThrow::insert(21, 10, 22, 23);
+
+            // #25 - Enfrentarse a ellos
+            DialogueDiceThrow::insert(25, 15, 26, 27);
+
+
             echo "All Seeded";
         } catch (\Throwable $th) {
             echo $th;
+        }
+    }
+    public function destroy()
+    {
+        try {
+            DB::query("DROP DATABASE IF EXISTS dungeons_and_dragons");
+            echo "All Destroyed";
+        } catch (\Throwable $th) {
+            Response::error($th);
         }
     }
 }

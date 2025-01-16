@@ -70,3 +70,11 @@ class Dice {
     return value;
   }
 }
+
+class Audio {
+  static loopPlay(fileName) {
+    const audio = new Audio(fileName);
+    audio.loop = true;
+    audio.play();
+  }
+}

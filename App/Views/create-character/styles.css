@@ -2,6 +2,9 @@
 body {
   font-family: "Arial", sans-serif;
   background-color: #331701;
+  background: rgba(0, 0, 0, 0.5)
+    url("http://localhost/dungeons_and_dragons/assets/images/file-selection-background.jpg")
+    no-repeat center center fixed;
   color: #fff;
   margin: 0;
   padding: 0;
@@ -18,7 +21,7 @@ form {
   padding: 30px 40px;
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
   text-align: center;
-  max-width: 400px;
+  max-width: 500px;
   width: 100%;
 }
 
@@ -55,6 +58,7 @@ input[type="text"] {
 /* Role Options */
 .role-options {
   display: flex;
+  gap: 10px;
   justify-content: space-around;
 }
 

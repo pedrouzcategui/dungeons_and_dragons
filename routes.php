@@ -35,5 +35,6 @@ $router->put("/api/save-game", GameFilesController::class, "saveGame");
 $router->get("/api/ending/:id", EndingController::class, "get");
 $router->post("/api/ending", EndingController::class, "index");
 
-// Seeder Routes
+// Seeder Routes (ONLY DEVELOPMENT)
 $router->get("/seed", SeedController::class, "index");
+$router->get("/destroy", SeedController::class, "destroy");
