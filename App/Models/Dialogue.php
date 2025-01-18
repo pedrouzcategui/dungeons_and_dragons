@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Database as DB;
+use App\Response;
 
 class Dialogue
 {
@@ -65,20 +66,33 @@ class Dialogue
         return DB::query('SELECT * FROM chapters');
     }
 
+    public static function getDialogueById($chapter_id)
+    {
+        return DB::query(
+            "SELECT * FROM dialogue WHERE chapter_id = ? ORDER BY id ASC",
+            [$chapter_id]
+        );
+    }
+
     // Get dialogues for a specific chapter
-    public static function getChapterDialogue($chapterId, $characterId)
+    public static function getChapterDialogue($chapterId)
     {
         // Fetch dialogues for the given chapter
-        $dialogues = DB::query(
-            "SELECT * FROM dialogue WHERE chapter_id = ? ORDER BY id ASC",
-            [$chapterId]
-        );
+        $dialogues = Dialogue::getDialogueById($chapterId);
 
         // Fetch options for decision dialogues in the chapter
         $options = DB::query(
             "SELECT o.dialogue_id, o.id AS option_id, o.text AS description, o.next_dialogue_id
              FROM dialogue_options o 
              JOIN dialogue d ON o.dialogue_id = d.id 
+             WHERE d.chapter_id = ?",
+            [$chapterId]
+        );
+
+        $dice_throws = DB::query(
+            "SELECT d.id, do.id as dice_throw_id, do.dialogue_id, do.dice_threshold, do.next_dialogue_id_if_threshold_exceeded, do.next_dialogue_id_if_threshold_failed
+             FROM dialogue_dice_throws do 
+             JOIN dialogue d ON do.dialogue_id = d.id
              WHERE d.chapter_id = ?",
             [$chapterId]
         );
@@ -99,6 +113,25 @@ class Dialogue
                 ];
             }, $choices);
 
+
+            // Find the first matching dice throw as an object
+            $dice_throw = null;
+            foreach ($dice_throws as $throw) {
+                if ($throw['dialogue_id'] == $dialogue['id']) {
+                    $dice_throw = [
+                        'id' => $throw['dice_throw_id'],
+                        'threshold' => $throw['dice_threshold'],
+                        'nextDialogIdSuccess' => $throw['next_dialogue_id_if_threshold_exceeded'],
+                        'nextDialogIdDefault' => $throw['next_dialogue_id_if_threshold_failed']
+                    ];
+                    break; // Stop looping after finding the first match
+                }
+            }
+
+            // Use $dice_throw (either an object or null)
+            $dice_throw_paths = $dice_throw;
+
+
             // Add dialogue entry
             $dialogEntry = [
                 'id' => $dialogue['id'],
@@ -109,7 +142,8 @@ class Dialogue
                 'is_dice_throw' => (bool)$dialogue['is_dice_throw'],
                 'ending_id' => $dialogue['ending_id'],
                 'next_chapter_id' => $dialogue['next_chapter_id'],
-                'choices' => array_values($choices) // Reset keys for proper JSON encoding
+                'choices' => array_values($choices), // Reset keys for proper JSON encoding,
+                'dice_throw_info' => $dice_throw_paths
             ];
 
             $dialogData[] = $dialogEntry;

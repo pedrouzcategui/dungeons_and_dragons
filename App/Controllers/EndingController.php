@@ -16,16 +16,10 @@ class EndingController extends BaseController
     public function index(Request $request)
     {
         try {
-            // This will be a post function
+            // Transforma el request en un array.
             $data = $request->getBody();
-            // Get Character ID
-            $character_id = $data['character_id'];
-            $ending_id = $data['ending_id'];
-
-            $character = Character::getCharacterByID($character_id);
-            $character->update($character->getCurrentChapter(), $character->getDialogueNode(), TRUE, $ending_id);
-            // // // Update File with ending and ending ID
-            // // // Return view
+            $character = Character::getCharacterByID($request->getBody()['character_id']);
+            $character->update($character->getCurrentChapter(), $character->getDialogueNode(), TRUE, $request->getBody()['ending_id']);
             Response::json($character->toObject());
         } catch (\Throwable $th) {
             Response::error($th);

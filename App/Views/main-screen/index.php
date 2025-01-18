@@ -1,6 +1,6 @@
 <?php
 
-use App\Utils;
+use App\Components\AudioOptions;
 
 ?>
 <!DOCTYPE html>
@@ -16,9 +16,10 @@ use App\Utils;
     <div class="main-screen">
         <h1>The King's Betrayal</h1>
         <a href="file-selection">
-            <button>Start Game</button>
+            <button id="main_button">Start Game</button>
         </a>
         <span class="block">Please press F11 for a better gaming experience!</span>
+        <?= AudioOptions::render() ?>
     </div>
 </body>
 

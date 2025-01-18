@@ -1,50 +1,32 @@
-// document.addEventListener("DOMContentLoaded", () => {
-//   const FORM_STEPS = document.querySelectorAll("div.step");
-//   let current_step = 0;
-//   const CHARACTER_WINDOWS = document.querySelectorAll(".character-window");
-//   let class_input = document.querySelector("#character_class");
+/**Music Logic */
+document.addEventListener("DOMContentLoaded", () => {
+  const play_button = document.getElementById("play_music");
+  const pause_button = document.getElementById("pause_music");
+  const less_volume = document.getElementById("less_volume");
+  const more_volume = document.getElementById("more_volume");
+  const mute_volume = document.getElementById("mute_volume");
 
-//   //Step Functions
-//   const showStep = (i) => {
-//     FORM_STEPS.forEach((step) => {
-//       step.classList.remove("active");
-//     });
-//     FORM_STEPS[i].classList.add("active");
-//   };
+  let music_filename =
+    "http://localhost/dungeons_and_dragons/assets/music/file_select.mp3";
+  let audio = new GameAudio(music_filename);
 
-//   const nextStep = () => {
-//     showStep(++current_step);
-//   };
+  play_button.onclick = () => {
+    audio.loopPlay();
+  };
 
-//   const prevStep = () => {
-//     showStep(--current_step);
-//   };
+  pause_button.onclick = () => {
+    audio.pause();
+  };
 
-//   //BUTTONS
-//   document.getElementById("next-step-1").addEventListener("click", nextStep);
+  less_volume.onclick = () => {
+    audio.lowerVolume();
+  };
 
-//   CHARACTER_WINDOWS.forEach((c) => {
-//     c.addEventListener("click", () => {
-//       removeSelectedClasses();
-//       addSelectedClass(c);
-//       assignClassInput();
-//     });
-//   });
+  more_volume.onclick = () => {
+    audio.increaseVolume();
+  };
 
-//   function removeSelectedClasses() {
-//     CHARACTER_WINDOWS.forEach((c) => {
-//       c.classList.remove("selected");
-//     });
-//   }
-
-//   function addSelectedClass(e) {
-//     e.classList.add("selected");
-//   }
-
-//   function assignClassInput() {
-//     const selectedClass = document.querySelector(".character-window.selected");
-//     if (selectedClass) {
-//       class_input.value = selectedClass.dataset.class;
-//     }
-//   }
-// });
+  mute_volume.onclick = () => {
+    audio.mute();
+  };
+});

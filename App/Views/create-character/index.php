@@ -1,3 +1,9 @@
+<?php
+
+use App\Components\AudioOptions;
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -56,6 +62,8 @@
 
         <!-- Submit Button -->
         <button type="submit">Start Adventure</button>
+
+        <?= AudioOptions::render() ?>
     </form>
 </body>
 

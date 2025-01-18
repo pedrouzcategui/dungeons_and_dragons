@@ -8,13 +8,14 @@ use App\Models\Character;
 use App\Response;
 use App\Utils;
 
-class CharacterController extends BaseController
+class CharacterController
 {
     public function index()
     {
         View::render('create-character');
     }
 
+    /**Función que crea un personaje usando la información que viene del request. */
     public function create(Request $request)
     {
 
@@ -23,7 +24,6 @@ class CharacterController extends BaseController
         try {
             $character = new Character(NULL, $character_name, $character_class);
             if ($character->create()) {
-                echo "saving";
                 header("Location: file-selection");
             } else {
                 throw new \Exception("Failed to create character");

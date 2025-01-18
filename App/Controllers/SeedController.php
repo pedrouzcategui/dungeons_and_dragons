@@ -18,15 +18,15 @@ class SeedController
         try {
             //**Chapters */
             // Chapter 1
-            Chapter::insert("Escaping prison", "", "chapter-1.webp");
+            Chapter::insert("Escaping prison", "", "chapter-1.webp", "chapter_1.mp3");
             // Chapter 2
-            Chapter::insert("The first decision", "", "chapter-2.webp");
+            Chapter::insert("The first decision", "", "chapter-2.webp", "chapter_2.mp3");
             // Chapter 3 - Creating a distraction
-            Chapter::insert("Creating a distraction", "", "chapter-3.webp");
+            Chapter::insert("Creating a distraction", "", "chapter-3.webp", "chapter_3.mp3");
             // Chapter 4 - Praying for change
-            Chapter::insert("Praying for change", "", "chapter-4.webp");
+            Chapter::insert("Praying for change", "", "chapter-4.webp", "chapter_4.mp3");
             // Chapter 5 - The king's chamber
-            Chapter::insert("The king's chamber", "", "chapter-5.webp");
+            Chapter::insert("The king's chamber", "", "chapter-5.webp", "chapter_5.mp3");
 
             //**Endings */
             // Ending 1 - Dead in prison
@@ -172,7 +172,7 @@ class SeedController
             Dialogue::insert(TRUE, "Rey", 5, NULL, "Estás en el lado incorrecto de la historia, {{NAME}}. Nunca entenderás que no hay paz sin violencia. Te estoy dando la oportunidad para que tengas la vida que deseas, para que tengas todos los lujos que deseas... ¿Acaso no lo quieres?", TRUE, FALSE);
 
             // Ni muerto -> 35
-            // .... -> 38
+            // .... -> 
 
             // #37 - No Empathy - Ni Muerto (dice throw)
             Dialogue::insert(TRUE, "Rey", 5, NULL, "No me quedará otra cosa que hacer. Muere!", FALSE, FALSE);
@@ -228,29 +228,28 @@ class SeedController
             DialogueOption::insert(14, "Asesinar al soldado", 15);
             DialogueOption::insert(14, "Dejar ir al soldado", 16);
 
-
             // Cap 3 (dice mechanics start here)
             DialogueOption::insert(17, "Lanzar una piedra para distraerlos", 18);
             DialogueOption::insert(17, "Enfrentarte a ellos", 25);
 
-            DialogueOption::insert(19, "Pelear", 21);
-            DialogueOption::insert(19, "Rendirse", 24);
+            DialogueOption::insert(20, "Pelear", 21);
+            DialogueOption::insert(20, "Rendirse", 24);
 
             // Cap 4
-            DialogueOption::insert(26, "Justicia", 29);
-            DialogueOption::insert(26, "Fuerza", 30);
-            DialogueOption::insert(26, "Misericordia", 31);
-            DialogueOption::insert(26, "Perdon", 32);
+            DialogueOption::insert(28, "Justicia", 29);
+            DialogueOption::insert(28, "Fuerza", 30);
+            DialogueOption::insert(28, "Misericordia", 31);
+            DialogueOption::insert(28, "Perdon", 32);
 
             // Cap 5 
-            DialogueOption::insert(33, "No, tu deber es mejorar el reino, no tu propia riqueza.", 34);
-            DialogueOption::insert(33, "...", 38);
+            DialogueOption::insert(35, "No, tu deber es mejorar el reino, no tu propia riqueza.", 36);
+            DialogueOption::insert(35, "...", 40);
 
-            DialogueOption::insert(34, "Ni muerto.", 35);
-            DialogueOption::insert(34, "...", 38);
+            DialogueOption::insert(36, "Ni muerto.", 37);
+            DialogueOption::insert(36, "...", 40);
 
-            DialogueOption::insert(38, "No, esto no esta bien", 40);
-            DialogueOption::insert(38, "Tiene razon, mi rey.", 39);
+            DialogueOption::insert(40, "No, esto no esta bien", 42);
+            DialogueOption::insert(40, "Tiene razon, mi rey.", 41);
 
             // Dialogue Dice Throws
             // #20 - Lanzar una piedra

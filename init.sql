@@ -8,6 +8,7 @@ CREATE TABLE chapters (
   name VARCHAR(255),
   description TEXT,
   background_image_name TEXT,
+  music_file_name TEXT,
   PRIMARY KEY (id)
 );
 

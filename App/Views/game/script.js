@@ -12,6 +12,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     image_div.style.backgroundSize = "cover";
   }
 
+  console.log(chapter);
+
   loadBackgroundImage(chapter.id);
 
   let characterNameSpan = document.getElementById("character_name");
@@ -83,6 +85,22 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
   }
 
+  function renderDiceThrow() {
+    createButton("Roll Dice", () => {
+      let diceRolled = Dice.randomThrow();
+      let { threshold, nextDialogIdSuccess, nextDialogIdDefault } =
+        currentDialogNode.dice_throw_info;
+      // Here I need to redirect to one dialogue or another depending on the thresholda
+      alert(`Obtuviste un ${diceRolled}`);
+      console.log(`Dice roll: ${diceRolled}, Required: ${threshold}`);
+      if (diceRolled >= threshold) {
+        renderDialog(nextDialogIdSuccess);
+      } else {
+        renderDialog(nextDialogIdDefault);
+      }
+    });
+  }
+
   /**
    * Handles rendering the next button when no choices are available.
    */
@@ -108,12 +126,18 @@ document.addEventListener("DOMContentLoaded", async function () {
     currentDialogNode = dialogData.find((d) => d.id === dialogId); // Update the current dialog node
     characterNameSpan.innerHTML = currentDialogNode.name;
     console.log(currentDialogNode);
+
     if (!currentDialogNode) {
       console.error(`Dialog with ID ${dialogId} not found`);
       return;
     }
 
     dialogContainer.textContent = currentDialogNode.text;
+
+    if (currentDialogNode.is_dice_throw) {
+      renderDiceThrow();
+      return;
+    }
 
     if (currentDialogNode.is_ending) {
       renderEndingButton();
@@ -124,8 +148,6 @@ document.addEventListener("DOMContentLoaded", async function () {
       renderNextChapterButton();
       return; // Exit if final dialog
     }
-
-    console.log(currentDialogNode.choices);
 
     if (currentDialogNode.choices && currentDialogNode.choices.length > 0) {
       currentDialogNode.choices.forEach((choice) => {
@@ -140,4 +162,34 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   // Initialize the dialog system
   renderDialog(character.current_dialog_node_id);
+
+  /**Music Logic */
+  const play_button = document.getElementById("play_music");
+  const pause_button = document.getElementById("pause_music");
+  const less_volume = document.getElementById("less_volume");
+  const more_volume = document.getElementById("more_volume");
+  const mute_volume = document.getElementById("mute_volume");
+
+  let music_filename = `http://localhost/dungeons_and_dragons/assets/music/${chapter.music_file_name}`;
+  let audio = new GameAudio(music_filename);
+
+  play_button.onclick = () => {
+    audio.loopPlay();
+  };
+
+  pause_button.onclick = () => {
+    audio.pause();
+  };
+
+  less_volume.onclick = () => {
+    audio.lowerVolume();
+  };
+
+  more_volume.onclick = () => {
+    audio.increaseVolume();
+  };
+
+  mute_volume.onclick = () => {
+    audio.mute();
+  };
 });

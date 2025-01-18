@@ -1,3 +1,9 @@
+<?php
+
+use App\Components\AudioOptions;
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,7 +54,7 @@
             <button id="cancel-delete" class="cancel">No</button>
         </div>
     </div>
-
+    <?= AudioOptions::render() ?>
     <script src="script.js"></script>
 </body>
 

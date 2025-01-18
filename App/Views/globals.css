@@ -46,3 +46,26 @@ button {
 .bold {
   font-weight: bold;
 }
+
+.audio-controls {
+  padding: 10px;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  background: rgba(248, 118, 32, 0.832);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/**Audio Styles**/
+.audio_button {
+  border-radius: 5px;
+  transition: 0.3s ease-in-out all;
+}
+
+.audio_button:hover {
+  cursor: pointer;
+  background-color: #e34902;
+  padding: 5px;
+}

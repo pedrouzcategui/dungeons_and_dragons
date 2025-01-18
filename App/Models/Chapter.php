@@ -11,14 +11,16 @@ class Chapter
     private $title;
     private $description;
     private $background_image_name;
+    private $music_file_name;
 
     // Constructor
-    public function __construct($id, $title, $description, $background_image_name = null)
+    public function __construct($id, $title, $description, $background_image_name = null, $music_file_name = null)
     {
         $this->setId($id);
         $this->setTitle($title);
         $this->setDescription($description);
         $this->setBackgroundImageName($background_image_name);
+        $this->setMusicFileName($music_file_name);
     }
 
     // Getters
@@ -40,6 +42,10 @@ class Chapter
     {
         return $this->background_image_name;
     }
+    public function getMusicFileName()
+    {
+        return $this->music_file_name;
+    }
 
     // Setters
     public function setId($id)
@@ -60,6 +66,10 @@ class Chapter
     {
         $this->background_image_name = $image_name;
     }
+    public function setMusicFileName($music_file_name)
+    {
+        $this->music_file_name = $music_file_name;
+    }
 
     public static function getAll()
     {
@@ -71,16 +81,16 @@ class Chapter
         $result = DB::query('SELECT * FROM chapters WHERE id = ?', [$id]);
         if (count($result) > 0) {
             $row = $result[0];
-            return new self($row['id'], $row['name'], $row['description'], $row['background_image_name']);
+            return new self($row['id'], $row['name'], $row['description'], $row['background_image_name'], $row['music_file_name']);
         }
         return null;
     }
 
-    public static function insert($name, $description, $background_image_name = null)
+    public static function insert($name, $description, $background_image_name = null, $music_file_name = null)
     {
         DB::query(
-            "INSERT INTO chapters (name, description, background_image_name) VALUES (?, ?, ?)",
-            [$name, $description, $background_image_name]
+            "INSERT INTO chapters (name, description, background_image_name, music_file_name) VALUES (?, ?, ?, ?)",
+            [$name, $description, $background_image_name, $music_file_name]
         );
     }
 
@@ -91,6 +101,7 @@ class Chapter
             'title' => $this->getTitle(),
             'description' => $this->getDescription(),
             'background_image_url_name' => $this->getBackgroundImageName(),
+            'music_file_name' => $this->getMusicFileName(),
         ];
     }
 }

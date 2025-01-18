@@ -2,36 +2,35 @@
 
 namespace App\Views;
 
-use App\Utils;
-
 class View
 {
+    /**La función estática render recibe el nombre de un directorio, y opcionalmente, variables. */
     public static function render($viewFolder, $data = [])
     {
-        // Extract data to be used in the view
+        // Extrae las variables para ser usadas en la vista.
         extract($data);
 
-        // Append 'index.php' to the folder to always target the index file
+        // El punto de partida siempre sera un archivo llamado index.php
         $viewPath = 'App/Views/' . $viewFolder . '/index.php';
 
-        // Determine the directory of the view for CSS/JS inclusion
+        // Determina el directorio para hacer inclusión de archivos de JS/CSS
         $viewDir = 'App/Views/' . $viewFolder;
 
-        // Dynamically include CSS if it exists
+        // Si existe CSS lo incluye.
         $cssPath = "$viewDir/styles.css";
         if (file_exists($cssPath)) {
             echo '<link rel="stylesheet" href="App/Views/globals.css">';
             echo '<link rel="stylesheet" href="' . $cssPath . '">';
         }
 
-        // Dynamically include JavaScript if it exists
+        // Si existe JS lo incluye.
         $jsPath = "$viewDir/script.js";
         if (file_exists($jsPath)) {
             echo '<script src="App/Views/globals.js"></script>';
             echo '<script src="' . $jsPath . '"></script>';
         }
 
-        // Include the view
+        // Finalmente incluimos la vista. Si no existe se devuelve un exception.
         if (file_exists($viewPath)) {
             include_once $viewPath;
         } else {

@@ -71,10 +71,63 @@ class Dice {
   }
 }
 
-class Audio {
-  static loopPlay(fileName) {
-    const audio = new Audio(fileName);
-    audio.loop = true;
-    audio.play();
+class GameAudio {
+  audio = null;
+  filename = null;
+  isPlaying = null;
+
+  constructor(fileName) {
+    if (fileName) {
+      this.filename = fileName;
+      this.audio = new Audio(this.filename);
+      this.setIsPlaying(false);
+    }
+  }
+
+  getIsPlaying() {
+    return this.isPlaying;
+  }
+
+  setIsPlaying(value) {
+    this.isPlaying = value;
+  }
+
+  loopPlay() {
+    if (this.isPlaying) {
+      this.audio.pause();
+      this.audio.currentTime = 0;
+    }
+    this.audio.volume = 0.2;
+    this.audio.loop = true;
+    this.audio.play();
+  }
+
+  mute() {
+    this.audio.volume = 0;
+  }
+
+  pause() {
+    if (this.audio) {
+      this.audio.pause();
+    }
+  }
+
+  replay() {
+    if (this.audio) {
+      this.audio.currentTime = 0;
+      this.audio.play();
+    }
+  }
+
+  lowerVolume() {
+    if (this.audio && this.audio.volume > 0) {
+      this.audio.volume = Math.max(0, this.audio.volume - 0.1);
+    }
+  }
+
+  increaseVolume() {
+    if (this.audio && this.audio.volume < 1) {
+      this.audio.volume = Math.min(1, this.audio.volume + 0.1);
+    }
   }
 }
