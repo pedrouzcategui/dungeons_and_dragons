@@ -60,12 +60,10 @@ class API {
 }
 
 class Dice {
-  // Static method to simulate a random dice throw between 1 and 20
   static randomThrow() {
     return Math.floor(Math.random() * 20) + 1;
   }
 
-  // Static method to return a fixed value for debugging
   static fixedThrow(value) {
     return value;
   }
@@ -97,7 +95,7 @@ class GameAudio {
       this.audio.pause();
       this.audio.currentTime = 0;
     }
-    this.audio.volume = 0.2;
+    this.audio.volume = 0.5;
     this.audio.loop = true;
     this.audio.play();
   }

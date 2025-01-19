@@ -6,10 +6,7 @@ use App\Views\View;
 use App\Request;
 use App\Response;
 use App\Models\Character;
-use App\Database as DB;
-use App\Models\Dialogue;
 use App\Models\Ending;
-use App\Utils;
 
 class EndingController extends BaseController
 {
@@ -28,9 +25,9 @@ class EndingController extends BaseController
 
     public function get(Request $request)
     {
+        //TODO: Try Catch
         $character_id = $request->getParam("id");
-        $character = Character::getCharacterByID($character_id);
-        $ending = Ending::getById($character->getEndingId());
+        $ending = Ending::getById(Character::getCharacterByID($character_id)->getEndingId());
         Response::json($ending->toObject());
     }
 

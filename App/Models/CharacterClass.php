@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Database as DB;
-use App\Utils;
 
 class CharacterClass
 {

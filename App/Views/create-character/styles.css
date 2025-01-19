@@ -14,7 +14,6 @@ body {
   height: 100vh;
 }
 
-/* Form Container */
 form {
   background: linear-gradient(145deg, #3b1101, #5c2121);
   border-radius: 15px;
@@ -25,26 +24,22 @@ form {
   width: 100%;
 }
 
-/* Title */
 h1 {
   font-size: 2rem;
   margin-bottom: 20px;
 }
 
-/* Form Group Styling */
 .form-group {
   margin-bottom: 20px;
   text-align: left;
 }
 
-/* Label Styling */
 label {
   display: block;
   margin-bottom: 10px;
   font-size: 1.1rem;
 }
 
-/* Input Field */
 input[type="text"] {
   width: 100%;
   padding: 10px;
@@ -55,7 +50,6 @@ input[type="text"] {
   outline: none;
 }
 
-/* Role Options */
 .role-options {
   display: flex;
   gap: 10px;
@@ -65,13 +59,29 @@ input[type="text"] {
 .role-options label {
   font-size: 1rem;
   cursor: pointer;
+  padding: 5px;
+  border: 2px solid transparent;
 }
 
-input[type="radio"] {
-  margin-right: 5px;
+.role-options input[type="radio"] {
+  display: none;
 }
 
-/* Button Styling */
+/* Highlight the selected character */
+.role-options label.selected {
+  border: 2px solid #ffd700; /* Gold border */
+  background-color: rgba(255, 223, 0, 0.2); /* Light gold background */
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(255, 223, 0, 0.5);
+  cursor: pointer;
+}
+
+/* Add a hover effect to labels */
+.role-options label:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
 button {
   background-color: #ff8c42;
   color: #fff;

@@ -79,4 +79,15 @@ class DialogueDiceThrow
         $params = [$dialogue_id, $dice_threshold, $next_dialogue_id_if_threshold_exceeded, $next_dialogue_id_if_threshold_failed];
         return DB::query($sql, $params);
     }
+
+    public static function getDialogueDiceThrowsByChapterId($chapterId)
+    {
+        return DB::query(
+            "SELECT d.id, do.id as dice_throw_id, do.dialogue_id, do.dice_threshold, do.next_dialogue_id_if_threshold_exceeded, do.next_dialogue_id_if_threshold_failed
+             FROM dialogue_dice_throws do 
+             JOIN dialogue d ON do.dialogue_id = d.id
+             WHERE d.chapter_id = ?",
+            [$chapterId]
+        );
+    }
 }

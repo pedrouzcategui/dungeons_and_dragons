@@ -11,6 +11,7 @@ class Database
     private $password;
     private static $connection;
 
+    // Idealmente cambiar dichas credenciales dependiendo de la conexion establecida.
     public function __construct()
     {
         $this->setHost('localhost');
@@ -64,7 +65,7 @@ class Database
         $this->password = $password;
     }
 
-    // Create and return a connection
+    // Crea y retorna una conexion hacia la base de datos.
     private static function connect()
     {
         if (!self::$connection) {
@@ -90,7 +91,7 @@ class Database
         $stmt = $conn->prepare($sql);
 
         if ($stmt === false) {
-            // Return preparation error details
+            // Si hay un error en la preparación de la query, devuelve un error.
             return [
                 'error_code' => $conn->errno,
                 'error_message' => $conn->error,
@@ -100,15 +101,15 @@ class Database
         }
 
         if (!empty($params)) {
-            // Dynamically bind parameters based on their types
-            $types = str_repeat('s', count($params)); // Assuming all parameters are strings by default
+            // Agrega parametros a la query
+            $types = str_repeat('s', count($params)); // Por el momento, solo soporta parametros de tipo string.
             $stmt->bind_param($types, ...$params);
         }
 
+        // Ejecuta la query.
         $stmt->execute();
 
         if ($stmt->errno) {
-            // Return execution error details
             $stmt->close();
             return [
                 'error_code' => $stmt->errno,
@@ -121,12 +122,12 @@ class Database
         $result = $stmt->get_result();
 
         if ($result) {
-            // SELECT queries: Fetch all rows
+            // Solo las queries de tipo "SELECT" retornan filas, en tal caso, si existen, se convierten en arreglos.
             $data = $result->fetch_all(MYSQLI_ASSOC);
             $stmt->close();
             return $data;
         } else {
-            // Non-SELECT queries: Return true for successful execution
+            // Para queries de otro tipo que no sean "SELECT" se chequea si hubieron filas afectadas.
             $success = $conn->affected_rows > 0;
             $stmt->close();
             return $success;
@@ -134,8 +135,8 @@ class Database
     }
 
 
-    // Close the connection when the script ends
-    public static function closeConnection()
+    // Funcion que cierra la conexion.
+    public function closeConnection()
     {
         if (self::$connection) {
             self::$connection->close();

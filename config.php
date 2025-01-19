@@ -1,1 +1,2 @@
-// Define constants and require them, such as the URL (this one is very useful actually)
+<?php
+define("BASE_URL", "http://localhost/dungeons_and_dragons");

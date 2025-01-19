@@ -16,24 +16,22 @@ use App\Components\AudioOptions;
 
 <body>
     <form method="post" action="create-character">
-        <h1>Character Creation</h1>
-        <!-- Name Section -->
+        <h1>Creación de personaje</h1>
         <div class="form-group">
-            <label for="character_name">What is your name?</label>
-            <input type="text" id="character_name" name="character_name" required />
+            <label for="character_name">¿Cuál es el nombre de tu personaje?</label>
+            <input style="background:rgb(172, 77, 60); color: white" type="text" id="character_name" name="character_name" required />
         </div>
 
-        <!-- Role Selection -->
         <div class="form-group">
-            <label>What is your role?</label>
+            <label>¿Cuál es tu rol?</label>
             <div class="role-options">
                 <label for="knight">
                     <img src="assets/images/classes/knight.png" alt="knight.png" />
-                    <input type="radio" name="character_class" id="knight" value="1" checked>
-                    <span>
-                        Knight
-                    </span>
-                    <div style="display: flex; flex-direction: column">
+                    <div class="flex justify-between items-center my-2">
+                        <span>Caballero</span>
+                        <input type="radio" name="character_class" id="knight" value="1" checked>
+                    </div>
+                    <div class="flex flex-column">
                         <span>Ataque: 3</span>
                         <span>Defensa: 1</span>
                         <span>Honor: 2</span>
@@ -41,8 +39,11 @@ use App\Components\AudioOptions;
                 </label>
                 <label for="archer">
                     <img src="assets/images/classes/archer.png" alt="archer.png" />
-                    <input type="radio" name="character_class" id="archer" value="2"> Archer
-                    <div style="display: flex; flex-direction: column">
+                    <div class="flex justify-between items-center  my-2">
+                        <span>Arquero</span>
+                        <input type="radio" name="character_class" id="archer" value="2">
+                    </div>
+                    <div class="flex flex-column">
                         <span>Ataque: 1</span>
                         <span>Defensa: 3</span>
                         <span>Honor: 2</span>
@@ -50,8 +51,11 @@ use App\Components\AudioOptions;
                 </label>
                 <label for="mage">
                     <img src="assets/images/classes/mage.png" alt="mage.png" />
-                    <input type="radio" name="character_class" id="mage" value="3"> Mage
-                    <div style="display: flex; flex-direction: column">
+                    <div class="flex justify-between items-center  my-2">
+                        <span>Mago</span>
+                        <input type="radio" name="character_class" id="mage" value="3">
+                    </div>
+                    <div class="flex flex-column">
                         <span>Ataque: 2</span>
                         <span>Defensa: 3</span>
                         <span>Honor: 1</span>
@@ -60,8 +64,7 @@ use App\Components\AudioOptions;
             </div>
         </div>
 
-        <!-- Submit Button -->
-        <button type="submit">Start Adventure</button>
+        <button type="submit">Crear Personaje</button>
 
         <?= AudioOptions::render() ?>
     </form>

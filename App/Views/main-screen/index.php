@@ -9,16 +9,16 @@ use App\Components\AudioOptions;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The King's Betrayal</title>
+    <title>La traición del rey</title>
 </head>
 
 <body>
     <div class="main-screen">
-        <h1>The King's Betrayal</h1>
+        <h1 class="uppercase">La traición del rey</h1>
         <a href="file-selection">
-            <button id="main_button">Start Game</button>
+            <button id="main_button">Iniciar Juego</button>
         </a>
-        <span class="block">Please press F11 for a better gaming experience!</span>
+        <span class="block">Presiona F11 en tu teclado para mayor immersión!</span>
         <?= AudioOptions::render() ?>
     </div>
 </body>

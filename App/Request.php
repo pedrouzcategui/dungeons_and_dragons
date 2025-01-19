@@ -6,68 +6,107 @@ class Request
 {
     private $post;
     private $get;
-    private $files;
     private $server;
     private $params;
     private $rawBody;
 
-    public function __construct()
+    public function getPost()
     {
-        $this->post = $_POST;
-        $this->get = $_GET;
-        $this->files = $_FILES;
-        $this->server = $_SERVER;
-
-        // Load raw input for JSON or other payloads
-        $this->rawBody = file_get_contents('php://input');
+        return $this->post;
     }
 
+    public function setPost($post)
+    {
+        $this->post = $post;
+    }
+
+    public function getGet()
+    {
+        return $this->get;
+    }
+
+    public function setGet($get)
+    {
+        $this->get = $get;
+    }
+
+    public function getServer()
+    {
+        return $this->server;
+    }
+
+    public function setServer($server)
+    {
+        $this->server = $server;
+    }
+
+    public function getParams()
+    {
+        return $this->params;
+    }
+
+    public function setParams($params)
+    {
+        $this->params = $params;
+    }
+
+    public function getRawBody()
+    {
+        return $this->rawBody;
+    }
+
+    public function setRawBody($rawBody)
+    {
+        $this->rawBody = $rawBody;
+    }
+
+    public function __construct()
+    {
+        $this->setPost($_POST);
+        $this->setGet($_GET);
+        $this->setServer($_SERVER);
+        $this->setRawBody(file_get_contents('php://input'));
+    }
+
+    // Funcion genérica para obtener datos del body.
     public function input($key, $default = null)
     {
         return $this->post[$key] ?? $this->get[$key] ?? $default;
     }
 
+    // Funcion genérica para obtener datos del body SOLO si es mediante el verbo POST.
     public function post($key, $default = null)
     {
         return $this->post[$key] ?? $default;
     }
 
+    // Funcion genérica para obtener datos del body SOLO si es mediante el verbo GET.
     public function get($key, $default = null)
     {
         return $this->get[$key] ?? $default;
     }
 
-    public function file($key)
-    {
-        return $this->files[$key] ?? null;
-    }
-
+    // Funcion para obtener llaves del objeto SERVER
     public function server($key, $default = null)
     {
         return $this->server[$key] ?? $default;
     }
 
-    public function setParams(array $params)
-    {
-        $this->params = $params;
-    }
-
-    // This function gets params from the URL
+    // Funcion para obtener algun parametro del objeto params (helper usado en las rutas)
     public function getParam($key, $default = null)
     {
         return $this->params[$key] ?? $default;
     }
 
-    // New: Get raw body data (useful for JSON payloads)
+    // Obtiene el body de requests de tipo JSON.
     public function getBody()
     {
         $contentType = $this->server('CONTENT_TYPE', '');
 
         if (strpos($contentType, 'application/json') !== false) {
-            return json_decode($this->rawBody, true); // Decode JSON into an associative array
+            return json_decode($this->rawBody, true);
         }
 
-        // Return raw body as a string for non-JSON content types
         return $this->rawBody;
     }
 }

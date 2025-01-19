@@ -12,8 +12,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     image_div.style.backgroundSize = "cover";
   }
 
-  console.log(chapter);
-
   loadBackgroundImage(chapter.id);
 
   let characterNameSpan = document.getElementById("character_name");
@@ -23,22 +21,16 @@ document.addEventListener("DOMContentLoaded", async function () {
   const choicesContainer = document.getElementById("choices-container");
   const chapterNameSpan = document.getElementById("chapter_title");
   const chapterIdSpan = document.getElementById("chapter_id");
+  const d20 = document.getElementById("d20");
 
   chapterIdSpan.innerText = chapter.id;
   chapterNameSpan.innerText = chapter.title;
 
-  /**
-   * Clears the choices container.
-   */
   function clearChoices() {
     choicesContainer.innerHTML = "";
+    d20.style.display = "none";
   }
 
-  /**
-   * Creates and appends a button to the choices container.
-   * @param {string} text - The button text.
-   * @param {Function} onClick - The click event handler.
-   */
   function createButton(text, onClick) {
     const button = document.createElement("button");
     button.textContent = text;
@@ -46,31 +38,24 @@ document.addEventListener("DOMContentLoaded", async function () {
     choicesContainer.appendChild(button);
   }
 
-  /**
-   * Handles rendering the next chapter button.
-   */
   function renderNextChapterButton() {
-    createButton("Next Chapter", async () => {
+    createButton("Siguiente Capítulo", async () => {
       try {
         const save = await API.put("/api/save-game", {
           character_id,
           current_chapter: currentDialogNode.next_chapter_id,
-          current_dialogue_node: currentDialogNode.id, // Save the last node of the current chapter
+          current_dialogue_node: currentDialogNode.id,
         });
         console.log("Game progress saved:", save);
-        // Redirect to the game or next chapter
-        window.location.href = "game"; // Modify the URL if needed
+        window.location.href = "game";
       } catch (error) {
         console.error("Failed to save game progress:", error);
       }
     });
   }
 
-  /**
-   * Renders the ending button and handles the API call for the ending.
-   */
   function renderEndingButton() {
-    createButton("End", async () => {
+    createButton("Fin", async () => {
       try {
         await API.post("/api/ending", {
           character_id,
@@ -86,13 +71,12 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
   function renderDiceThrow() {
-    createButton("Roll Dice", () => {
+    d20.style.display = "block";
+    createButton("Lanzar Dado", () => {
       let diceRolled = Dice.randomThrow();
       let { threshold, nextDialogIdSuccess, nextDialogIdDefault } =
         currentDialogNode.dice_throw_info;
-      // Here I need to redirect to one dialogue or another depending on the thresholda
       alert(`Obtuviste un ${diceRolled}`);
-      console.log(`Dice roll: ${diceRolled}, Required: ${threshold}`);
       if (diceRolled >= threshold) {
         renderDialog(nextDialogIdSuccess);
       } else {
@@ -101,11 +85,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
   }
 
-  /**
-   * Handles rendering the next button when no choices are available.
-   */
   function renderNextButton() {
-    createButton("Next", () => {
+    createButton("Siguiente Diálogo", () => {
       const nextDialog = dialogData.find(
         (d) => d.id === currentDialogNode.id + 1
       );
@@ -117,13 +98,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
   }
 
-  /**
-   * Renders dialog and choices for the current dialog ID.
-   * @param {number} dialogId - The ID of the dialog to render.
-   */
   function renderDialog(dialogId) {
     clearChoices();
-    currentDialogNode = dialogData.find((d) => d.id === dialogId); // Update the current dialog node
+    currentDialogNode = dialogData.find((d) => d.id === dialogId);
     characterNameSpan.innerHTML = currentDialogNode.name;
     console.log(currentDialogNode);
 
@@ -141,12 +118,12 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     if (currentDialogNode.is_ending) {
       renderEndingButton();
-      return; // Exit if ending dialog
+      return;
     }
 
     if (currentDialogNode.is_final) {
       renderNextChapterButton();
-      return; // Exit if final dialog
+      return;
     }
 
     if (currentDialogNode.choices && currentDialogNode.choices.length > 0) {
@@ -160,10 +137,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
 
-  // Initialize the dialog system
   renderDialog(character.current_dialog_node_id);
 
-  /**Music Logic */
   const play_button = document.getElementById("play_music");
   const pause_button = document.getElementById("pause_music");
   const less_volume = document.getElementById("less_volume");

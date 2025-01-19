@@ -15,14 +15,12 @@ body {
   height: 100vh;
 }
 
-/* Title Styling */
 h1 {
   font-size: 2rem;
   margin-bottom: 2rem;
   text-shadow: 2px 2px 4px #000;
 }
 
-/* Save File Panel Container */
 .save-files-container {
   background: rgba(0, 0, 0, 0.479);
   border: 3px solid #ff4400;
@@ -32,7 +30,6 @@ h1 {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
-/* Save File Option */
 .file-option {
   position: relative;
   background: linear-gradient(to right, #572d04, #965e03);
@@ -68,7 +65,7 @@ h1 {
 }
 
 .file-option:hover {
-  background: linear-gradient(to right, #004080, #0050a0);
+  background: linear-gradient(to right, #510568, #0050a0);
   border-color: #00aaff;
 }
 
@@ -77,7 +74,6 @@ h1 {
   justify-content: space-between;
 }
 
-/* Footer Instructions */
 .footer-instructions {
   margin-top: 1rem;
   font-size: 0.9rem;
@@ -85,8 +81,10 @@ h1 {
   color: #aaddff;
 }
 
-.active {
+.active,
+.active:hover {
   border-color: yellow !important;
+  background: #0066cc;
 }
 
 .completed,
@@ -106,6 +104,10 @@ h1 {
   flex-grow: 1;
 }
 
+button {
+  border: none;
+}
+
 .delete-button {
   background-color: #ff4d4d;
   color: white;
@@ -117,7 +119,7 @@ h1 {
 }
 
 .delete-button:hover {
-  background-color: #ff1a1a;
+  background-color: #ff1a1aa1;
 }
 
 .modal {
@@ -159,4 +161,9 @@ button.confirm {
 button.cancel {
   background-color: red;
   color: white;
+}
+
+.file-options-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

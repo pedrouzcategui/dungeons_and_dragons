@@ -23,7 +23,7 @@ body {
   align-items: end;
   width: 100%;
   padding: 50px;
-  text-align: left;
+  text-align: right;
   color: white;
   background: url("http://localhost/dungeons_and_dragons/assets/images/textures/stone-wall.jpg");
   background-size: cover;

@@ -73,12 +73,30 @@ class DialogueOption
         $this->next_chapter_id = $next_chapter_id;
     }
 
-    // Insert function
     public static function insert($dialogue_id, $text, $next_dialogue_id)
     {
         DB::query(
             "INSERT INTO dialogue_options (dialogue_id, text, next_dialogue_id) VALUES (?, ?, ?)",
             [$dialogue_id, $text, $next_dialogue_id]
+        );
+    }
+
+    public static function getDialogueOptionsByChapterId($chapterId)
+    {
+        return DB::query(
+            "SELECT o.dialogue_id, o.id AS option_id, o.text AS description, o.next_dialogue_id
+             FROM dialogue_options o 
+             JOIN dialogue d ON o.dialogue_id = d.id 
+             WHERE d.chapter_id = ?",
+            [$chapterId]
+        );
+    }
+
+    public static function getDialogueOptionsByDialogueId($dialogue_id)
+    {
+        return DB::query(
+            "SELECT * FROM dialogue_options WHERE dialogue_id = ?",
+            [$dialogue_id]
         );
     }
 }

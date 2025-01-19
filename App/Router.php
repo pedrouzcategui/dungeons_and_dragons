@@ -6,9 +6,10 @@ use App\Views\View;
 
 class Router
 {
+
+    // Existen rutas y parametros. Las rutas son strings que son almacenados para luego identificar la redirección a la vista correcta. Los parametros son valores dinámicos que pueden existir en dichas rutas.
     protected $routes = [];
     protected $params = [];
-
 
     public function setParams(array $params)
     {
@@ -25,29 +26,33 @@ class Router
         return $this->params;
     }
 
+    // Añade rutas de tipo GET
     public function get($route, $controller, $action)
     {
         $this->addRoute('GET', $route, $controller, $action);
     }
 
+    // Añade rutas de tipo POST
     public function post($route, $controller, $action)
     {
         $this->addRoute('POST', $route, $controller, $action);
     }
 
+    // Añade rutas de tipo PUT
     public function put($route, $controller, $action)
     {
         $this->addRoute('PUT', $route, $controller, $action);
     }
 
+    // Añade rutas de tipo DELETE
     public function delete($route, $controller, $action)
     {
         $this->addRoute('DELETE', $route, $controller, $action);
     }
 
+    // Función que se encarga de añadir rutas a la clase, al igual que convertir parámetros en keys del array.
     protected function addRoute($method, $route, $controller, $action)
     {
-        // Convert route parameters (e.g., :id) to regex patterns
         $pattern = preg_replace('/:[a-zA-Z0-9_]+/', '([^/]+)', $route);
         $this->routes[$method][$pattern] = [
             'controller' => $controller,
@@ -56,6 +61,7 @@ class Router
         ];
     }
 
+    // Función que se usa para "despachar" una ruta. Es decir, para elegir cual ruta mostrar. En este caso realiza una busqueda dependiendo del patrón y del verbo deseado, y luego genera un controlador y ejecuta la determinada acción.
     public function dispatch($uri, $method)
     {
         $request = new Request();
@@ -87,6 +93,7 @@ class Router
             }
         }
 
+        // Si no consigue ninguna ruta, generará un 404 por defecto.
         View::render('404');
     }
 }

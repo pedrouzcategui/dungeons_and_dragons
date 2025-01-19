@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Database as DB;
-use App\Utils;
 
 class Chapter
 {
@@ -81,7 +80,13 @@ class Chapter
         $result = DB::query('SELECT * FROM chapters WHERE id = ?', [$id]);
         if (count($result) > 0) {
             $row = $result[0];
-            return new self($row['id'], $row['name'], $row['description'], $row['background_image_name'], $row['music_file_name']);
+            return new self(
+                $row['id'],
+                $row['name'],
+                $row['description'],
+                $row['background_image_name'],
+                $row['music_file_name']
+            );
         }
         return null;
     }

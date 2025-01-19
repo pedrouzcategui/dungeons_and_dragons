@@ -5,6 +5,7 @@ namespace App;
 class Utils
 {
 
+    // Función usada para debuggear de manera más sencilla
     public static function prettyDump(...$things)
     {
         foreach ($things as $thing) {
@@ -14,12 +15,7 @@ class Utils
         }
     }
 
-    public static function redirect($url, $statusCode)
-    {
-        header('Location: ' . $url, true, $statusCode);
-    }
-
-    //**This function get images, path is related to the assets/images folder */
+    // Función para obtener el URL de una imagen relativa a la carpeta "images"
     public static function getImagePath($path)
     {
         return "http://localhost/dungeons_and_dragons/assets/images/$path";

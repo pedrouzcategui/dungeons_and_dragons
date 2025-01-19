@@ -14,18 +14,18 @@ use App\Components\AudioOptions;
 </head>
 
 <body>
-    <a class="text-white underline" href="/dungeons_and_dragons"> ⬅️ Back to main screen</a>
-    <h1>Please select a file.</h1>
+    <a class="text-white underline" href="/dungeons_and_dragons"> ⬅️ Volver a la pantalla principal</a>
+    <h1>Por Favor Selecciona Una Partida.</h1>
     <div class="save-files-container">
         <?php for ($i = 0; $i < 3; $i++): ?>
             <?php if (isset($characters[$i])): ?>
                 <div class="file-option <?= $characters[$i]->getIsGameCompleted() ? "completed" : "" ?>" data-character-id="<?= $characters[$i]->getId() ?>">
                     <div class="file-options-meta-data">
-                        <span>File <?= $i + 1 ?></span> <span>1-11-2025</span>
+                        <span class="text-sm">Partida <?= $i + 1 ?></span> <span> <?= $characters[$i]->getCharacterClassName() ?></span>
                     </div>
-                    <span class="mb-1"><b><?= $characters[$i]->getName() ?> - Clase: <?= $characters[$i]->getCharacterClassName() ?></b> </span>
+                    <span class="mb-1"><b><?= $characters[$i]->getName() ?></b> </span>
                     <?php if (!$characters[$i]->getIsGameCompleted()): ?>
-                        <span class="text-sm">Current Chapter: <?= $characters[$i]->getCurrentChapter() ?></span>
+                        <span class="text-sm">Capitulo Actual: <?= $characters[$i]->getCurrentChapter() ?></span>
                     <?php else: ?>
                         <span class="text-sm">Ending: <?= $characters[$i]->getEndingId() ?></span>
                     <?php endif; ?>
@@ -33,23 +33,22 @@ use App\Components\AudioOptions;
             <?php else: ?>
                 <a href="create-character">
                     <div class="file-create">
-                        <span> ➕ Create new file</span>
+                        <span> ➕ Crear una nueva partida</span>
                     </div>
                 </a>
             <?php endif; ?>
         <?php endfor; ?>
         <div class="file-options-actions">
-            <a href="game">
-                <button class="w-full" type="submit" id="start-adventure" disabled>Resume Adventure</button>
+            <button class="delete-button w-full" type="button" id="delete-file" disabled>Eliminar Partida</button>
+            <a href="game" class="w-full">
+                <button class="w-full confirm" type="submit" id="start-adventure" disabled>Empezar Aventura</button>
             </a>
-            <button class="w-full delete-button" type="button" id="delete-file" disabled>Delete File</button>
         </div>
     </div>
 
-    <!-- Confirmation Modal -->
     <div id="confirmation-modal" class="modal hidden">
         <div class="modal-content">
-            <p>Are you sure you want to delete this file?</p>
+            <p>¿Estás seguro que quieres eliminar esta partida?</p>
             <button id="confirm-delete" class="confirm">Yes</button>
             <button id="cancel-delete" class="cancel">No</button>
         </div>

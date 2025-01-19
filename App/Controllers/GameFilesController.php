@@ -12,16 +12,19 @@ use App\Utils;
 
 class GameFilesController extends BaseController
 {
+    //**Vista de selección de archivos. */
     public function index()
     {
         View::render('file-selection', ['characters' => Character::getAll()]);
     }
 
-    public function loadChapter(Request $request)
+    // Carga el archivo principal del juego.
+    public function loadChapter()
     {
         View::render('game');
     }
 
+    // Guarda el progreso del juego luego de cada nodo de dialogo final.
     public function saveGame(Request $request)
     {
         $data = $request->getBody();
@@ -39,7 +42,6 @@ class GameFilesController extends BaseController
             'message' => 'Game progress saved!',
             'chapter_id' => $character->getCurrentChapter(),
             'character_id' => $character->getId(),
-            // 'request' => $data, For debug purposses
             'next_dialogue_id' => $dialogue['id']
         ];
 

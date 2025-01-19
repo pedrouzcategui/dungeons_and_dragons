@@ -10,7 +10,7 @@ use App\Components\AudioOptions;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dialog System</title>
+    <title>La traición del rey - Juego</title>
 </head>
 
 <body>
@@ -18,15 +18,16 @@ use App\Components\AudioOptions;
 
     </div>
     <div id="dialog" class="dialog">
-        <h2 id="title">Chapter #<span id="chapter_id"></span>: <span id="chapter_title"></span> </h2>
+        <h2 id="title">Capítulo #<span id="chapter_id"></span>: <span id="chapter_title"></span> </h2>
         <span class="my-2 block italic bold" id="character_name"></span>
         <div id="dialog-container"></div>
+        <img src="http://localhost\dungeons_and_dragons\assets\images\d20.webp" width="50px" id="d20" />
         <div class="dice" id="dice-container" style="display: none;">
             <span>
-                Required Number: <span id="required-number"></span>
+                Número Requerido: <span id="required-number"></span>
             </span>
             <span>
-                Obtained Number: <span id="obtained-number"></span>
+                Número Obtenido: <span id="obtained-number"></span>
             </span>
         </div>
 

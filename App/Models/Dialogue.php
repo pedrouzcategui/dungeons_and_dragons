@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Database as DB;
-use App\Response;
 
 class Dialogue
 {
@@ -19,7 +18,6 @@ class Dialogue
         $this->setDescription($description);
     }
 
-    // Getters
     public function getId()
     {
         return $this->id;
@@ -77,27 +75,16 @@ class Dialogue
     // Get dialogues for a specific chapter
     public static function getChapterDialogue($chapterId)
     {
-        // Fetch dialogues for the given chapter
+        // Obtiene todos los dialogos dependiendo de el capitulo
         $dialogues = Dialogue::getDialogueById($chapterId);
 
-        // Fetch options for decision dialogues in the chapter
-        $options = DB::query(
-            "SELECT o.dialogue_id, o.id AS option_id, o.text AS description, o.next_dialogue_id
-             FROM dialogue_options o 
-             JOIN dialogue d ON o.dialogue_id = d.id 
-             WHERE d.chapter_id = ?",
-            [$chapterId]
-        );
+        // Obtiene todas las opciones de dialogo dependiendo del capitulo
+        $options = DialogueOption::getDialogueOptionsByChapterId($chapterId);
 
-        $dice_throws = DB::query(
-            "SELECT d.id, do.id as dice_throw_id, do.dialogue_id, do.dice_threshold, do.next_dialogue_id_if_threshold_exceeded, do.next_dialogue_id_if_threshold_failed
-             FROM dialogue_dice_throws do 
-             JOIN dialogue d ON do.dialogue_id = d.id
-             WHERE d.chapter_id = ?",
-            [$chapterId]
-        );
+        // Obtiene todas las lanzadas de dados dependiendo del capitulo
+        $dice_throws = DialogueDiceThrow::getDialogueDiceThrowsByChapterId($chapterId);
 
-        // Format data into the desired structure
+        // Creación de un objeto auxiliar para almacenar los datos
         $dialogData = [];
         foreach ($dialogues as $dialogue) {
             // Filter and map choices
@@ -152,7 +139,6 @@ class Dialogue
         return $dialogData;
     }
 
-    // Find the first dialogue of a chapter
     public static function findFirstDialogueOfChapter($chapter_id)
     {
         $dialogue = DB::query(
@@ -163,7 +149,6 @@ class Dialogue
         return !empty($dialogue) ? $dialogue[0] : null;
     }
 
-    // Utility function to validate JSON consistency
     public static function validateJson($data)
     {
         $json = json_encode($data);
