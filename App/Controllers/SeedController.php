@@ -8,6 +8,7 @@ use App\Models\Dialogue;
 use App\Models\DialogueOption;
 use App\Models\DialogueDiceThrow;
 use App\Models\Ending;
+use App\Models\Item;
 use App\Response;
 
 class SeedController
@@ -41,6 +42,12 @@ class SeedController
             Ending::insert("Corrupted Kingdom", "El rey y tu han unido fuerzas para gobernar el reino, sin embargo, eres asesinado a los meses por el mismo rey.", "ending-5.webp");
             // Ending 6 - Corruption continues
             Ending::insert("The king won", "El rey te asesino y siguio con su reino.", "ending-6.webp");
+
+            //**Items */
+            Item::insert("Arma Nivel 1", "soldier-blade.png");
+            Item::insert("Arma Nivel 2", "soldier-blade.png");
+            Item::insert("Armadura Nivel 1", "knight-armor.png");
+            Item::insert("Armadura Nivel 2", "knight-armor.png");
 
             //**Dialogues */
             // #1
@@ -78,8 +85,8 @@ class SeedController
             // #11 - Ir al armamento
             Dialogue::insert(FALSE, "Narrator", 2, NULL, "Entras al armamento, y encuentras una {{ARMA DE CLASE}} de soldado, ¿qué decides hacer?", TRUE, FALSE);
 
-            // #12 - Ir al armamento - Tomar el arma de soldado
-            Dialogue::insert(FALSE, "Narrator", 2, 3, "Eliges tomar el arma de soldado. Te suma 20 puntos de ataque.", FALSE, TRUE);
+            // #12 - Ir al armamento - Tomar el arma de soldado (ITEM REWARD)
+            Dialogue::insert(FALSE, "Narrator", 2, 3, "Eliges tomar el arma de soldado. Te suma 20 puntos de ataque.", FALSE, TRUE, FALSE, NULL, FALSE, TRUE);
 
             // #13 - Ir al armamento - Dejar el arma de soldado
             Dialogue::insert(TRUE, "Soldado", 2, NULL, 'Hey! Eres el prisionero. *grita* Necesito refuerzos!', FALSE, FALSE);

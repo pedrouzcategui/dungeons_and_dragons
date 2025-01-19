@@ -3,11 +3,9 @@
 namespace App\Models;
 
 use App\Database as DB;
-use App\Utils;
 use App\Models\BaseModel;
 use App\Models\CharacterClass;
 use App\Response;
-use Error;
 
 class Character extends BaseModel
 {

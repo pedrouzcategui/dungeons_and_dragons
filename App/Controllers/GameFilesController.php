@@ -33,6 +33,7 @@ class GameFilesController extends BaseController
             $dialogue = Dialogue::findFirstDialogueOfChapter($data['current_chapter']);
             $character = Character::getCharacterByID($data['character_id']);
             $character->update($dialogue['chapter_id'], $dialogue['id']);
+            // Update Obtained Items
         } catch (\Throwable $th) {
             return Response::error($th);
         }

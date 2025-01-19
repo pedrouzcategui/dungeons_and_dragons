@@ -50,11 +50,12 @@ class Dialogue
     }
 
     // Insert a new dialogue
-    public static function insert($is_character, $character_name, $chapter_id, $next_chapter_id, $text, $is_decision, $is_final, $is_ending = FALSE, $ending_id = NULL, $is_dice_throw = FALSE, $is_reward = FALSE)
+    // La razón por la que este método es estático, es porque no se necesita por el momento mantener el estado de la clase para uso posterior en otras operaciones, y esta clase solo se usa en el seeder, lo cuál facilita la acción de añadir clases.
+    public static function insert($is_character, $character_name, $chapter_id, $next_chapter_id, $text, $is_decision, $is_final, $is_ending = FALSE, $ending_id = NULL, $is_dice_throw = FALSE, $is_item = FALSE,)
     {
         DB::query(
-            "INSERT INTO dialogue (is_character, character_name, chapter_id, next_chapter_id, text, is_decision, is_final, is_ending, ending_id, is_dice_throw, is_reward) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            [$is_character, $character_name, $chapter_id, $next_chapter_id, $text, $is_decision, $is_final, $is_ending, $ending_id, $is_dice_throw, $is_reward]
+            "INSERT INTO dialogue (is_character, character_name, chapter_id, next_chapter_id, text, is_decision, is_final, is_ending, ending_id, is_dice_throw, is_item) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            [$is_character, $character_name, $chapter_id, $next_chapter_id, $text, $is_decision, $is_final, $is_ending, $ending_id, $is_dice_throw, $is_item]
         );
     }
 
@@ -144,9 +145,9 @@ class Dialogue
         $dialogue = DB::query(
             "SELECT * FROM dialogue WHERE chapter_id = ? ORDER BY id ASC LIMIT 1",
             [$chapter_id]
-        );
+        )[0];
 
-        return !empty($dialogue) ? $dialogue[0] : null;
+        return !empty($dialogue) ? $dialogue : null;
     }
 
     public static function validateJson($data)

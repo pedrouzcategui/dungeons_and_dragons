@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     image_div.style.backgroundImage = `url('http://localhost/dungeons_and_dragons/assets/images/chapters/chapter-${chapterId}.webp')`;
     image_div.style.backgroundSize = "cover";
   }
+  let obtained_items = [];
 
   loadBackgroundImage(chapter.id);
 
@@ -45,6 +46,7 @@ document.addEventListener("DOMContentLoaded", async function () {
           character_id,
           current_chapter: currentDialogNode.next_chapter_id,
           current_dialogue_node: currentDialogNode.id,
+          obtained_items,
         });
         console.log("Game progress saved:", save);
         window.location.href = "game";

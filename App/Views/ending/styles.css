@@ -32,9 +32,9 @@ body {
 .ending-info h1 {
   font-size: 4rem;
   margin-bottom: 20px;
-  text-decoration: underline;
 }
 
 .ending-info p {
-  text-align: left;
+  text-align: right;
+  margin-bottom: 20px;
 }

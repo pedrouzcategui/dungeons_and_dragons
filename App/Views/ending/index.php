@@ -10,8 +10,8 @@
 <body>
     <div class="ending-screen" id="ending-screen"></div>
     <div class="ending-info">
-        <p>Has obtenido el final #<span id="ending-id"></span></p>
-        <h1 id="ending-title">Ending Title</h1>
+        <p class="mb-2">Has obtenido el final #<span id="ending-id"></span></p>
+        <h1 id="ending-title" class="my-2">Ending Title</h1>
         <p id="ending-description">Ending Description</p>
         <a href="/dungeons_and_dragons">volver a la pantalla principal</a>
     </div>

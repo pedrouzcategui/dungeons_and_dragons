@@ -26,6 +26,7 @@ CREATE TABLE items (
   id INT AUTO_INCREMENT,
   name TEXT,
   image_name TEXT,
+  type ENUM('weapon', 'armor', 'shield'),
   PRIMARY KEY (id)
 );
 
@@ -49,11 +50,13 @@ CREATE TABLE dialogue (
   is_ending BOOLEAN DEFAULT FALSE,
   ending_id INT DEFAULT NULL,
   is_dice_throw BOOLEAN DEFAULT FALSE,
-  is_reward BOOLEAN DEFAULT FALSE,
+  is_item BOOLEAN DEFAULT FALSE,
+  item_id INT,
   PRIMARY KEY (id),
   FOREIGN KEY (chapter_id) REFERENCES chapters(id),
   FOREIGN KEY (next_chapter_id) REFERENCES chapters(id),
-  FOREIGN KEY (ending_id) REFERENCES endings(id)
+  FOREIGN KEY (ending_id) REFERENCES endings(id),
+  FOREIGN KEY (item_id) REFERENCES items(id)
 );
 
 CREATE TABLE dialogue_options (
@@ -81,8 +84,6 @@ CREATE TABLE characters (
   FOREIGN KEY (ending_id) REFERENCES endings(id)
 );
 
--- TODO FOR TODAY::
-
 CREATE TABLE dialogue_dice_throws (
   id INT AUTO_INCREMENT,
   dialogue_id INT,
@@ -95,14 +96,14 @@ CREATE TABLE dialogue_dice_throws (
   FOREIGN KEY (next_dialogue_id_if_threshold_failed) REFERENCES dialogue(id)
 );
 
-CREATE TABLE rewards (
-  id INT AUTO_INCREMENT,
+CREATE TABLE dialogue_stat_changes (
+  id INT PRIMARY KEY AUTO_INCREMENT,
   dialogue_id INT,
-  is_item BOOLEAN DEFAULT FALSE,
-  item_id INT,
-  PRIMARY KEY (id),
-  FOREIGN KEY (dialogue_id) REFERENCES dialogue(id),
-  FOREIGN KEY (item_id) REFERENCES items(id)
+  chapter_id INT,
+  stat_type ENUM('health', 'attack', 'defense', 'charisma', 'honor'),
+  change_type INT,
+  FOREIGN KEY (chapter_id) REFERENCES chapters(id),
+  FOREIGN KEY (dialogue_id) REFERENCES dialogue(id)
 );
 
 CREATE TABLE character_items (
@@ -113,8 +114,6 @@ CREATE TABLE character_items (
   FOREIGN KEY (character_id) REFERENCES characters(id),
   FOREIGN KEY (item_id) REFERENCES items(id)
 );
-
--- TODO FOR TODAY (END) 
 
 CREATE TABLE character_stats (
     id INT AUTO_INCREMENT,

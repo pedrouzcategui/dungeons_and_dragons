@@ -50,3 +50,9 @@ Clona el proyecto
 Ponlo en la carpeta htdocs de xampp
 ejecuta el init.sql
 ejecuta el seeder.
+
+## Patrón de Desarrollo
+
+El patrón de desarrollo elegido es MVC (Modelo-Vista-Controlador).
+
+## Estructura de Carpetas

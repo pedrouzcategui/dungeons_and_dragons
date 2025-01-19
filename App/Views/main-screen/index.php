@@ -14,7 +14,7 @@ use App\Components\AudioOptions;
 
 <body>
     <div class="main-screen">
-        <h1 class="uppercase">La traición del rey</h1>
+        <h1>La traición del rey</h1>
         <a href="file-selection">
             <button id="main_button">Iniciar Juego</button>
         </a>

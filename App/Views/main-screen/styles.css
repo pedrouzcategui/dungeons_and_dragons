@@ -17,7 +17,7 @@ body {
 }
 
 .main-screen h1 {
-  font-size: 4rem;
+  font-size: 3rem;
   margin-bottom: 1rem;
 }
 
@@ -54,4 +54,6 @@ body {
 
 #main_button {
   animation: grow 2s infinite;
+  font-family: "PressStart";
+  margin-bottom: 20px;
 }

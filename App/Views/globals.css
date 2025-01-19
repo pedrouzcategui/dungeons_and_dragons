@@ -1,5 +1,13 @@
+@font-face {
+  font-family: "PressStart";
+  src: url("http://localhost/dungeons_and_dragons/assets/fonts/press-start.woff2")
+      format("woff2"),
+    url("http://localhost/dungeons_and_dragons/assets/fonts/press-start.woff")
+      format("woff");
+}
+
 * {
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-family: "PressStart", sans-serif;
 }
 
 a {
