@@ -26,9 +26,20 @@ class CharacterController
         try {
 
             $character = new Character(NULL, $character_name, $character_class);
+            $character->create();
+
             $character_class = CharacterClass::findById($character->getClassId());
-            Response::json($character->toObject());
-            if ($character->create()) {
+
+            CharacterStat::insert(
+                $character->getId(),
+                $character_class->getHealth(),
+                $character_class->getAttack(),
+                $character_class->getDefense(),
+                $character_class->getLuck(),
+                $character_class->getHonor()
+            );
+
+            if ($character) {
                 header("Location: file-selection");
             } else {
                 throw new \Exception("Failed to create character");

@@ -127,7 +127,13 @@ class Database
             $stmt->close();
             return $data;
         } else {
-            // Para queries de otro tipo que no sean "SELECT" se chequea si hubieron filas afectadas.
+            // Para queries de tipo "INSERT", obtenemos el último ID insertado
+            if (stripos($sql, "INSERT") === 0) {
+                $lastInsertId = $conn->insert_id;
+                $stmt->close();
+                return $lastInsertId; // Return the last inserted ID
+            }
+            // For other queries (UPDATE, DELETE), just check if any rows were affected
             $success = $conn->affected_rows > 0;
             $stmt->close();
             return $success;

@@ -126,7 +126,7 @@ CREATE TABLE character_stats (
     luck INT DEFAULT 0,
     honor INT DEFAULT 0,
     PRIMARY KEY (id),
-    FOREIGN KEY (character_id) REFERENCES characters(id)
+    FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE
 );
 
 -- Seed Classes

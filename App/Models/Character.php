@@ -118,12 +118,12 @@ class Character extends BaseModel
 
     public function create(): bool|array
     {
-        $result = DB::query(
+        $resourceId = DB::query(
             "INSERT INTO characters (name, class_id, current_chapter, current_dialogue_node) VALUES (?, ?, ?, ?)",
             [$this->getName(), $this->getClassId(), $this->getCurrentChapter(), $this->getDialogueNode()]
         );
-
-        return $result;
+        $this->setId($resourceId);
+        return $resourceId;
     }
 
     public function update($currentChapter, $currentDialogueNode, $is_game_completed = FALSE, $ending_id = NULL)

@@ -94,6 +94,26 @@ class CharacterClass
         $this->honor = $honor;
     }
 
+    public static function getAll()
+    {
+        $classes = [];
+        $sql = "SELECT * FROM classes";
+        $results = DB::query($sql);
+        foreach ($results as $class) {
+            $class_object = new self(
+                $class['id'],
+                $class['name'],
+                $class['attack'],
+                $class['defense'],
+                $class['health'],
+                $class['luck'],
+                $class['honor']
+            );
+            array_push($classes, $class_object);
+        }
+        return $classes;
+    }
+
     public static function findById($id)
     {
         $sql = "SELECT * FROM classes WHERE id = ?";

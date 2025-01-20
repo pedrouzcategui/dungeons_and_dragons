@@ -1,7 +1,10 @@
 <?php
 
 use App\Components\AudioOptions;
+use App\Models\CharacterClass;
+use App\Utils;
 
+$classes = CharacterClass::getAll();
 ?>
 
 <!DOCTYPE html>
