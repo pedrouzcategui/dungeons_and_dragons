@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", async function () {
   const character_id = parseInt(localStorage.getItem("character_id"));
   const image_div = document.getElementById("chapter_image");
+  const item_image = document.getElementById("item_image");
   const {
     dialog: dialogData,
     character,
@@ -11,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     image_div.style.backgroundImage = `url('http://localhost/dungeons_and_dragons/assets/images/chapters/chapter-${chapterId}.webp')`;
     image_div.style.backgroundSize = "cover";
   }
-  let obtained_items = [];
+  let obtained_item = null;
 
   loadBackgroundImage(chapter.id);
 
@@ -46,7 +47,7 @@ document.addEventListener("DOMContentLoaded", async function () {
           character_id,
           current_chapter: currentDialogNode.next_chapter_id,
           current_dialogue_node: currentDialogNode.id,
-          obtained_items,
+          obtained_item,
         });
         console.log("Game progress saved:", save);
         window.location.href = "game";
@@ -87,6 +88,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
   }
 
+  function renderItemCollection(item) {
+    // Show Item Image
+    item_image.setAttribute(
+      "src",
+      Utils.getImagePath(`icons/${item.image_name}`)
+    );
+    // Update Obtained Items Array
+    obtained_item = item.id;
+  }
+
   function renderNextButton() {
     createButton("Siguiente Diálogo", () => {
       const nextDialog = dialogData.find(
@@ -112,6 +123,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     dialogContainer.textContent = currentDialogNode.text;
+
+    if (currentDialogNode.is_item) {
+      renderItemCollection(currentDialogNode.item);
+    }
 
     if (currentDialogNode.is_dice_throw) {
       renderDiceThrow();

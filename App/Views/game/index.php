@@ -22,14 +22,7 @@ use App\Components\AudioOptions;
         <span class="my-2 block italic bold" id="character_name"></span>
         <div id="dialog-container"></div>
         <img src="http://localhost\dungeons_and_dragons\assets\images\d20.webp" width="50px" id="d20" />
-        <div class="dice" id="dice-container" style="display: none;">
-            <span>
-                Número Requerido: <span id="required-number"></span>
-            </span>
-            <span>
-                Número Obtenido: <span id="obtained-number"></span>
-            </span>
-        </div>
+        <img id="item_image" width="50px">
 
         <div id="choices-container"></div>
     </div>

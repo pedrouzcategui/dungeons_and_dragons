@@ -129,3 +129,9 @@ class GameAudio {
     }
   }
 }
+
+class Utils {
+  static getImagePath(image_name) {
+    return `http://localhost/dungeons_and_dragons/assets/images/${image_name}`;
+  }
+}

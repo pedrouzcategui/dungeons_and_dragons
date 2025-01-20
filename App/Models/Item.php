@@ -42,13 +42,24 @@ class Item
     }
     public static function findById($id)
     {
-        $sql = "SELECT * FROM items WHERE id = ?";
-        $result = DB::query($sql, [$id])[0];
+        $sql = "SELECT * FROM items WHERE id = ? LIMIT 1";
+        $result = DB::query($sql, [$id]);
 
         if (!empty($result)) {
-            return new self($result['id'], $result['name'], $result['image_name']);
+            $item = $result[0];
+            return new self($item['id'], $item['name'], $item['image_name']);
         }
 
+        return null;
+    }
+
+    public static function getByDialogueId($dialogue_id)
+    {
+        $item_id = DB::query("SELECT item_id FROM dialogue WHERE id = ? LIMIT 1", [$dialogue_id]);
+        return $item_id;
+        if ($item_id) {
+            return self::findById($item_id);
+        }
         return null;
     }
 
@@ -56,5 +67,13 @@ class Item
     {
         $sql = "INSERT INTO items (name, image_name) VALUES (?, ?)";
         return DB::query($sql, [$name, $image_name]);
+    }
+    public function toObject()
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'image_name' => $this->getImageName()
+        ];
     }
 }

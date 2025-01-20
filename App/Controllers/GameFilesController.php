@@ -6,7 +6,9 @@ use App\Views\View;
 use App\Request;
 use App\Response;
 use App\Models\Character;
+use App\Models\Item;
 use App\Database as DB;
+use App\Models\CharacterItem;
 use App\Models\Dialogue;
 use App\Utils;
 
@@ -30,10 +32,13 @@ class GameFilesController extends BaseController
         $data = $request->getBody();
 
         try {
+
             $dialogue = Dialogue::findFirstDialogueOfChapter($data['current_chapter']);
             $character = Character::getCharacterByID($data['character_id']);
+            $item_id = $data['obtained_item'];
             $character->update($dialogue['chapter_id'], $dialogue['id']);
-            // Update Obtained Items
+            $item = Item::findById($item_id);
+            CharacterItem::insert($character->getId(), $item->getId());
         } catch (\Throwable $th) {
             return Response::error($th);
         }

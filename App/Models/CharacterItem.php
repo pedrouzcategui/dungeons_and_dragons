@@ -49,12 +49,22 @@ class CharacterItem
 
     public static function insert($character_id, $item_id)
     {
-        $result = DB::query("INSERT INTO character_items (character_id, item_id) VALUES (?, ?)", [$character_id, $item_id]);
-        // Return result as instantiated class.
+        return DB::query("INSERT INTO character_items (character_id, item_id) VALUES (?, ?)", [$character_id, $item_id]);
     }
 
     public function save()
     {
-        DB::query("INSERT INTO character_items (character_id, item_id) VALUES (?, ?)", [$this->getCharacterId(), $this->getItemId()]);
+        return DB::query("INSERT INTO character_items (character_id, item_id) VALUES (?, ?)", [$this->getCharacterId(), $this->getItemId()]);
+    }
+
+    public static function getItemsByCharacterId($character_id)
+    {
+        $items = [];
+        $character_items = DB::query("SELECT * FROM character_items WHERE character_id = ?", [$character_id]);
+        foreach ($character_items as $character_item) {
+            $item = Item::findById($character_item['item_id']);
+            array_push($items, $item);
+        }
+        return $items;
     }
 }

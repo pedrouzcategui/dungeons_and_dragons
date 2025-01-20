@@ -1,6 +1,8 @@
 <?php
 
 use App\Components\AudioOptions;
+use App\Components\CharacterItems;
+use App\Utils;
 
 ?>
 
@@ -23,7 +25,12 @@ use App\Components\AudioOptions;
                     <div class="file-options-meta-data">
                         <span class="text-sm">Partida <?= $i + 1 ?></span> <span> <?= $characters[$i]->getCharacterClassName() ?></span>
                     </div>
-                    <span class="mb-1"><b><?= $characters[$i]->getName() ?></b> </span>
+                    <span class="my-2"><b><?= $characters[$i]->getName() ?></b> </span>
+
+                    <?php if ($characters[$i]->getCollectedItems() != null): ?>
+                        <?= CharacterItems::render($characters[$i]->getCollectedItems()) ?>
+                    <?php endif; ?>
+
                     <?php if (!$characters[$i]->getIsGameCompleted()): ?>
                         <span class="text-sm">Capitulo Actual: <?= $characters[$i]->getCurrentChapter() ?></span>
                     <?php else: ?>
@@ -41,7 +48,7 @@ use App\Components\AudioOptions;
         <div class="file-options-actions">
             <button class="delete-button w-full" type="button" id="delete-file" disabled>Eliminar Partida</button>
             <a href="game" class="w-full">
-                <button class="w-full confirm" type="submit" id="start-adventure" disabled>Empezar Aventura</button>
+                <button class="w-full confirm" type="submit" id="start-adventure" disabled>Continuar Partida</button>
             </a>
         </div>
     </div>

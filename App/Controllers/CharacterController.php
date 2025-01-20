@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Views\View;
 use App\Request;
 use App\Models\Character;
+use App\Models\CharacterClass;
+use App\Models\CharacterStat;
 use App\Response;
 use App\Utils;
 
@@ -22,7 +24,10 @@ class CharacterController
         $character_name = $request->input("character_name");
         $character_class = $request->input('character_class');
         try {
+
             $character = new Character(NULL, $character_name, $character_class);
+            $character_class = CharacterClass::findById($character->getClassId());
+            Response::json($character->toObject());
             if ($character->create()) {
                 header("Location: file-selection");
             } else {

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Database as DB;
 use App\Models\BaseModel;
 use App\Models\CharacterClass;
+use App\Models\CharacterItem;
 use App\Response;
 
 class Character extends BaseModel
@@ -111,6 +112,7 @@ class Character extends BaseModel
 
     public static function findById($id)
     {
+        // This should return the instance instead.
         return DB::query("SELECT * FROM characters WHERE id = $id");
     }
 
@@ -159,6 +161,16 @@ class Character extends BaseModel
     public function getCharacterClassName()
     {
         return CharacterClass::findById($this->getClassId())->getName();
+    }
+
+    public function getCollectedItems()
+    {
+        return CharacterItem::getItemsByCharacterId($this->id);
+    }
+
+    public function getCharacterStats()
+    {
+        return CharacterStat::getStatsByCharacterId($this->id);
     }
 
     public function toObject()

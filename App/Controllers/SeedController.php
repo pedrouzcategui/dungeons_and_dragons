@@ -16,6 +16,8 @@ class SeedController
     public function index()
     {
 
+        // If is seeded: return
+
         try {
             //**Chapters */
             // Chapter 1
@@ -33,21 +35,21 @@ class SeedController
             // Ending 1 - Dead in prison
             Ending::insert("Morir en prisión", "Decidiste que no vale la pena liberar al reino de la corrupción del rey. Mueres 3 días luego de estar en prisión.", "ending-1.webp");
             // Ending 2 - Planned Execution
-            Ending::insert("Surrender", "Te has rendido frente a los guardias, y tu ejecución ha sido adelantada.", "ending-2.webp");
+            Ending::insert("Rendirse", "Te has rendido frente a los guardias, y tu ejecución ha sido adelantada.", "ending-2.webp");
             // Ending 3 - Dead by soliders
-            Ending::insert("Death by soldiers", "Te han asesinado, no contaste con mucha suerte.", "ending-3.webp");
+            Ending::insert("Muerte por soldados", "Te han asesinado, no contaste con mucha suerte.", "ending-3.webp");
             // Ending 4 - Happy Kingdom
-            Ending::insert("Happy Kingdom", "Lo lograste! Liberaste al reino de la corrupcion del rey Orudam!", "ending-4.webp");
+            Ending::insert("El reino próspero", "Lo lograste! Liberaste al reino de la corrupcion del rey Orudam!", "ending-4.webp");
             // Ending 5 - Corrupted Kingdom
-            Ending::insert("Corrupted Kingdom", "El rey y tu han unido fuerzas para gobernar el reino, sin embargo, eres asesinado a los meses por el mismo rey.", "ending-5.webp");
+            Ending::insert("El reino corrupto", "El rey y tu han unido fuerzas para gobernar el reino, sin embargo, eres asesinado a los meses por el mismo rey.", "ending-5.webp");
             // Ending 6 - Corruption continues
-            Ending::insert("The king won", "El rey te asesino y siguio con su reino.", "ending-6.webp");
+            Ending::insert("Larga vida al rey", "El rey te asesino y siguio con su reino.", "ending-6.webp");
 
             //**Items */
-            Item::insert("Arma Nivel 1", "soldier-blade.png");
-            Item::insert("Arma Nivel 2", "soldier-blade.png");
-            Item::insert("Armadura Nivel 1", "knight-armor.png");
-            Item::insert("Armadura Nivel 2", "knight-armor.png");
+            Item::insert("Arma de soldado", "soldier-blade.png");
+            Item::insert("Arma Maldita", "devil-blade.png");
+            Item::insert("Armadura de Soldado", "iron-armor.png");
+            Item::insert("Armadura Divina", "gold-armor.png");
 
             //**Dialogues */
             // #1
@@ -86,7 +88,7 @@ class SeedController
             Dialogue::insert(FALSE, "Narrator", 2, NULL, "Entras al armamento, y encuentras una {{ARMA DE CLASE}} de soldado, ¿qué decides hacer?", TRUE, FALSE);
 
             // #12 - Ir al armamento - Tomar el arma de soldado (ITEM REWARD)
-            Dialogue::insert(FALSE, "Narrator", 2, 3, "Eliges tomar el arma de soldado. Te suma 20 puntos de ataque.", FALSE, TRUE, FALSE, NULL, FALSE, TRUE);
+            Dialogue::insert(FALSE, "Narrator", 2, 3, "Eliges tomar el arma de soldado. Te suma 20 puntos de ataque.", FALSE, TRUE, FALSE, NULL, FALSE, TRUE, 1);
 
             // #13 - Ir al armamento - Dejar el arma de soldado
             Dialogue::insert(TRUE, "Soldado", 2, NULL, 'Hey! Eres el prisionero. *grita* Necesito refuerzos!', FALSE, FALSE);
@@ -94,8 +96,8 @@ class SeedController
             // #14 - Ir al armamento - Dejar el arma de soldado
             Dialogue::insert(FALSE, "Narrator", 2, NULL, "Oh no, el soldado te ha visto, debes tomar una decisión. ¿Qué harás?", TRUE, FALSE);
 
-            // #15 - Ir al armamento - Dejar el arma de soldado - Asesinar al soldado
-            Dialogue::insert(FALSE, "Narrator", 2, 3, "Has asesinado al soldado. Sin embargo, un sentido de culpa te agobia. Sumas 20 de ataque, pero te resta 10 puntos de honor.", FALSE, TRUE);
+            // #15 - Ir al armamento - Dejar el arma de soldado - Asesinar al soldado (ITEM REWARD)
+            Dialogue::insert(FALSE, "Narrator", 2, 3, "Has asesinado al soldado. Sin embargo, un sentido de culpa te agobia. Tomas su armadura y sigues adelante.", FALSE, TRUE, FALSE, NULL, FALSE, TRUE, 3);
 
             // #16 - Ir al armamento - Dejar el arma de soldado - Dejar que huya
             Dialogue::insert(FALSE, "Narrator", 2, 3, "Has dejado que el soldado huya. Te suma 10 puntos de suerte y 20 puntos de honor.", FALSE, TRUE);
@@ -123,8 +125,8 @@ class SeedController
             // #21 Pelear (tirada de dados)
             Dialogue::insert(FALSE, "Narrator", 3, NULL, "Decides pelear con los soldados, debes obtener más de 10 para avanzar.", FALSE, FALSE, FALSE, NULL, TRUE, FALSE);
 
-            // #22 - Lanzar una piedra (fallido) - Pelear (exito)
-            Dialogue::insert(FALSE, "Narrator", 3, 4, "Lograste acabar con los guardias! Eres muy hábil, has obtenido una armadura que te incrementa la defensa por 100 puntos, y has conseguido un {{ARMA DE CLASE}} que aumenta tu ataque por 100 puntos!", FALSE, TRUE);
+            // #22 - Lanzar una piedra (fallido) - Pelear (exito) (ITEM REWARD)
+            Dialogue::insert(FALSE, "Narrator", 3, 4, "Lograste acabar con los guardias! Eres muy hábil, has obtenido una armadura que te incrementa la defensa por 100 puntos, y has conseguido una armadura de soldado que aumenta tu defensa por 100 puntos!", FALSE, TRUE, FALSE, NULL, FALSE, TRUE, 3);
 
             // #23 - Lanzar una piedra (fallido) - Pelear (fallido)
             Dialogue::insert(FALSE, "Narrator", 3, 4, "No puedes pelear más, has sido herido, te han quitado 50 puntos de vida. Pero logras llegar a la iglesia.", FALSE, TRUE);
@@ -154,13 +156,13 @@ class SeedController
             Dialogue::insert(FALSE, "Narrator", 4, 5, "Rezaste por justicia, tus puntos de vida y de defensa han aumentado por 20 puntos cada uno", FALSE, TRUE);
 
             // #30 - Pedir Fuerza
-            Dialogue::insert(FALSE, "Narrator", 4, 5, "Rezaste por Fuerza, tus puntos de ataque y honor han aumentado por 20 puntos cada uno", FALSE, TRUE);
+            Dialogue::insert(FALSE, "Narrator", 4, 5, "Rezaste por Fuerza, una espada maldita ha surgido de la nada, no tienes opción sino tomarla.", FALSE, TRUE, FALSE, NULL, FALSE, TRUE, 2);
 
             // #31 - Pedir Misericordia
             Dialogue::insert(FALSE, "Narrator", 4, 5, "Rezaste por misericordia, tus puntos de vida y ataque han sido incrementados por 30 puntos cada uno", FALSE, TRUE);
 
-            // #32 - Pedir Perdon
-            Dialogue::insert(FALSE, "Narrator", 4, 5, "Rezaste por perdón. Dios te mira desde el cielo y te ha bendecido con una armadura celestial. Tus puntos de vida, defensa, y ataque, aumentan por 100 cada uno.", FALSE, TRUE);
+            // #32 - Pedir Perdon (ITEM REWARD)
+            Dialogue::insert(FALSE, "Narrator", 4, 5, "Rezaste por perdón. Dios te mira desde el cielo y te ha bendecido con una armadura celestial. Tus puntos de vida, defensa, y ataque, aumentan por 100 cada uno.", FALSE, TRUE, FALSE, NULL, FALSE, TRUE, 4);
 
             //Chapter 5
             // #33

@@ -17,6 +17,7 @@ CREATE TABLE classes (
   name VARCHAR(255),
   attack INT,
   defense INT,
+  health INT,
   luck INT,
   honor INT,
   PRIMARY KEY (id)
@@ -101,7 +102,8 @@ CREATE TABLE dialogue_stat_changes (
   dialogue_id INT,
   chapter_id INT,
   stat_type ENUM('health', 'attack', 'defense', 'charisma', 'honor'),
-  change_type INT,
+  change_type ENUM('+','-') DEFAULT '+',
+  amount INT,
   FOREIGN KEY (chapter_id) REFERENCES chapters(id),
   FOREIGN KEY (dialogue_id) REFERENCES dialogue(id)
 );
@@ -111,7 +113,7 @@ CREATE TABLE character_items (
   character_id INT,
   item_id INT,
   PRIMARY KEY (id),
-  FOREIGN KEY (character_id) REFERENCES characters(id),
+  FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE,
   FOREIGN KEY (item_id) REFERENCES items(id)
 );
 
@@ -121,13 +123,13 @@ CREATE TABLE character_stats (
     health INT DEFAULT 0,
     attack INT DEFAULT 0,
     defense INT DEFAULT 0,
-    charisma INT DEFAULT 0,
+    luck INT DEFAULT 0,
     honor INT DEFAULT 0,
     PRIMARY KEY (id),
     FOREIGN KEY (character_id) REFERENCES characters(id)
 );
 
 -- Seed Classes
-INSERT INTO classes (name) VALUES ('Knight');
-INSERT INTO classes (name) VALUES ('Archer');
-INSERT INTO classes (name) VALUES ('Mage');
+INSERT INTO classes (name, attack, defense, health, luck, honor) VALUES ('Caballero', 70, 20, 100, 10, 50);
+INSERT INTO classes (name, attack, defense, health, luck, honor) VALUES ('Arquero', 70, 20, 100, 10, 50);
+INSERT INTO classes (name, attack, defense, health, luck, honor) VALUES ('Mago', 70, 20, 100, 10, 50);

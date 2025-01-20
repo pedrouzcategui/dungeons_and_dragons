@@ -13,7 +13,6 @@ class EndingController extends BaseController
     public function index(Request $request)
     {
         try {
-            // Transforma el request en un array.
             $data = $request->getBody();
             $character = Character::getCharacterByID($request->getBody()['character_id']);
             $character->update($character->getCurrentChapter(), $character->getDialogueNode(), TRUE, $request->getBody()['ending_id']);
@@ -25,15 +24,18 @@ class EndingController extends BaseController
 
     public function get(Request $request)
     {
-        //TODO: Try Catch
-        $character_id = $request->getParam("id");
-        $ending = Ending::getById(Character::getCharacterByID($character_id)->getEndingId());
-        Response::json($ending->toObject());
+        try {
+            $character_id = $request->getParam("id");
+            $character = Character::getCharacterByID($character_id);
+            $ending = Ending::getById($character->getEndingId());
+            Response::json($ending->toObject());
+        } catch (\Throwable $th) {
+            Response::error($th);
+        }
     }
 
     public function show()
     {
-
         return View::render('ending');
     }
 }
