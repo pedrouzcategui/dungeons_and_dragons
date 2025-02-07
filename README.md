@@ -1,4 +1,4 @@
-![La Traición Del Rey](475278188_1007065001455748_7165514548373821638_n.jpg)
+![La Traición Del Rey](main-screen.png)
 # La traición del rey (Juego RPG basado en calabozos y dragones)
 Este proyecto implementa un sistema de juego para un RPG basado en Dungeons and Dragons (D&D), desarrollado en PHP y JavaScript. Está diseñado para gestionar diálogos interactivos, decisiones del jugador, y mecánicas de tiradas de dados, con una arquitectura orientada a objetos.
 
