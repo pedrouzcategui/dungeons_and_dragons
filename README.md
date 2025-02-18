@@ -61,21 +61,23 @@ Hay dos maneras de realizar la instalación, manual y por git.
 
 6. Dirígete a `localhost/phpmyadmin`, haz click en importar, y selecciona el archivo de `init.sql`
 
+![alt text](documentation/importing-init-sql.png)
+
 7. Visita `localhost/dungeons_and_dragons/seed`. Este paso solo se debe hacer UNA vez, ya que es el seeder inicial de los diálogos del juego y otras cosas. Si llegases a ejecutar el seeder dos veces, deberás volver a importar el `init.sql` y ejecutar el seeder nuevamente (en el video de instalación se puede apreciar cómo resolver este problema si llegáse a ocurrir)
 
 8. Luego, dirígete a `localhost/dungeons_and_dragons` y empieza a jugar!
 
 ### Por Git
 
-Clona el proyecto haciendo uso de `git clone`
+1. Clona el proyecto haciendo uso de `git clone` (se asume que tienes tu servidor local ya montado)
 
-6. Dirígete a `localhost/phpmyadmin`, haz click en importar, y selecciona el archivo `init.sql`
+2. Dirígete a `localhost/phpmyadmin`, haz click en importar, y selecciona el archivo `init.sql`
 
 ![alt text](documentation/importing-init-sql.png)
 
-7. Visita `localhost/dungeons_and_dragons/seed`. Este paso solo se debe hacer UNA vez, ya que es el seeder inicial de los diálogos del juego y otras cosas. Si llegases a ejecutar el seeder dos veces, deberás volver a importar el `init.sql` y ejecutar el seeder nuevamente (en el video de instalación se puede apreciar cómo resolver este problema)
+3. Visita `localhost/dungeons_and_dragons/seed`. Este paso solo se debe hacer UNA vez, ya que es el seeder inicial de los diálogos del juego y otras cosas. Si llegases a ejecutar el seeder dos veces, deberás volver a importar el `init.sql` y ejecutar el seeder nuevamente (en el video de instalación se puede apreciar cómo resolver este problema)
 
-8. Luego, dirígete a `localhost/dungeons_and_dragons` y empieza a jugar!
+4. Luego, dirígete a `localhost/dungeons_and_dragons` y empieza a jugar!
 
 ## Patrón de Desarrollo
 
