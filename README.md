@@ -53,7 +53,9 @@ Hay dos maneras de realizar la instalación, manual y por git.
 3. Ubica la carpeta `xampp`, haz click en esa carpeta, y verás una carpeta llamada `htdocs`. Haz click en esa carpeta
    ![alt text](documentation/locate-htdocs.png)
 
-4. Allí, descomprime el ZIP. Asegúrate que el nombre de la carpeta no sea alterado. Es decir, el nombre de la carpeta debe ser `dungeons_and_dragons`. Asegurate que el path sea `<TU_DISCO_DURO>/xampp/htdocs/dungeons_and_dragons`. Es decir, el código fuente debe estar dentro de `dungeons_and_dragons`.
+4. Allí, descomprime el ZIP. Asegúrate que el nombre de la carpeta no sea alterado. Es decir, el nombre de la carpeta debe ser `dungeons_and_dragons`. Asegurate que el path sea `<TU_DISCO_DURO>/xampp/htdocs/dungeons_and_dragons`. Es decir, el código fuente debe estar dentro de `dungeons_and_dragons`. Es decir, la carpeta que contiene el codigo, debe quedar a este nivel:
+
+![alt text](documentation/example-location.png)
 
 5. Una vez allí. Activa tu Xampp/Wampp, activa los módulos de Apache y the Mysql.
 
