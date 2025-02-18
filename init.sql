@@ -3,6 +3,12 @@ DROP DATABASE IF EXISTS dungeons_and_dragons;
 CREATE DATABASE dungeons_and_dragons;
 USE dungeons_and_dragons;
 
+CREATE TABLE config (
+  id INT AUTO_INCREMENT,
+  is_seeded BOOLEAN,
+  PRIMARY KEY (id)
+);
+
 CREATE TABLE chapters (
   id INT AUTO_INCREMENT,
   name VARCHAR(255),
@@ -128,6 +134,9 @@ CREATE TABLE character_stats (
     PRIMARY KEY (id),
     FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE
 );
+
+-- Seed Config
+INSERT INTO config (is_seeded) VALUES (0);
 
 -- Seed Classes
 INSERT INTO classes (name, attack, defense, health, luck, honor) VALUES ('Caballero', 70, 20, 100, 10, 50);

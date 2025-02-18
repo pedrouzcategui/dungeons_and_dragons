@@ -10,26 +10,33 @@ use App\Models\DialogueDiceThrow;
 use App\Models\Ending;
 use App\Models\Item;
 use App\Response;
+use App\Utils;
 
 class SeedController
 {
     public function index()
     {
 
-        // If is seeded: return
+        $config = DB::query("SELECT is_seeded FROM config WHERE id = 1")[0];
+        if ($config['is_seeded']) {
+            echo "<p>La base de datos ya fué populada.</p>";
+            echo "<a href='./'>Volver al inicio</a>";
+            return;
+        }
+
 
         try {
             //**Chapters */
             // Chapter 1
-            Chapter::insert("Escaping prison", "", "chapter-1.webp", "chapter_1.mp3");
+            Chapter::insert("Escapando de prisión", "", "chapter-1.webp", "chapter_1.mp3");
             // Chapter 2
-            Chapter::insert("The first decision", "", "chapter-2.webp", "chapter_2.mp3");
+            Chapter::insert("La primera decisión", "", "chapter-2.webp", "chapter_2.mp3");
             // Chapter 3 - Creating a distraction
-            Chapter::insert("Creating a distraction", "", "chapter-3.webp", "chapter_3.mp3");
+            Chapter::insert("Creando una distracción", "", "chapter-3.webp", "chapter_3.mp3");
             // Chapter 4 - Praying for change
-            Chapter::insert("Praying for change", "", "chapter-4.webp", "chapter_4.mp3");
+            Chapter::insert("Rezando por el cambio", "", "chapter-4.webp", "chapter_4.mp3");
             // Chapter 5 - The king's chamber
-            Chapter::insert("The king's chamber", "", "chapter-5.webp", "chapter_5.mp3");
+            Chapter::insert("La traición del rey", "", "chapter-5.webp", "chapter_5.mp3");
 
             //**Endings */
             // Ending 1 - Dead in prison
@@ -49,11 +56,11 @@ class SeedController
             Item::insert("Arma de soldado", "soldier-blade.png");
             Item::insert("Arma Maldita", "devil-blade.png");
             Item::insert("Armadura de Soldado", "iron-armor.png");
-            Item::insert("Armadura Divina", "gold-armor.webp");
+            Item::insert("Armadura Divina", "divine-armor.webp");
 
             //**Dialogues */
             // #1
-            Dialogue::insert(FALSE, "Narrator", 1, NULL, "Eres {{NAME}}, un habil {{CLASE}}, cuyo propósito era servir y proteger al reino de Datrebil, governado por el rey Orudam. Sin embargo, luego de muchos años de servicio, te has dado cuenta que el rey ha devastado a la población en favor de enriquecer sus bolsillos.", FALSE, FALSE);
+            Dialogue::insert(FALSE, "Narrator", 1, NULL, "Eres un soldado cuyo propósito era servir y proteger al reino de Datrebil, governado por el rey Orudam. Sin embargo, luego de muchos años de servicio, te has dado cuenta que el rey ha devastado a la población en favor de enriquecer sus bolsillos.", FALSE, FALSE);
 
             // #2
             Dialogue::insert(FALSE, "Narrator", 1, NULL, "Eres una persona muy honesta, y valiente. No toleras el maltrato ni la injusticia, así que decidiste hacer algo que cambiaría tu vida para siempre: Revelarte en contra del rey.", FALSE, FALSE);
@@ -85,7 +92,7 @@ class SeedController
             Dialogue::insert(FALSE, "Narrator", 2, 3, "Llevas mucho tiempo en prisión, y al decidir no comer, te restas 10 puntos de vida", FALSE, TRUE);
 
             // #11 - Ir al armamento
-            Dialogue::insert(FALSE, "Narrator", 2, NULL, "Entras al armamento, y encuentras una {{ARMA DE CLASE}} de soldado, ¿qué decides hacer?", TRUE, FALSE);
+            Dialogue::insert(FALSE, "Narrator", 2, NULL, "Entras al armamento, y encuentras un arma de soldado, ¿qué decides hacer?", TRUE, FALSE);
 
             // #12 - Ir al armamento - Tomar el arma de soldado (ITEM REWARD)
             Dialogue::insert(FALSE, "Narrator", 2, 3, "Eliges tomar el arma de soldado. Te suma 20 puntos de ataque.", FALSE, TRUE, FALSE, NULL, FALSE, TRUE, 1);
@@ -166,7 +173,7 @@ class SeedController
 
             //Chapter 5
             // #33
-            Dialogue::insert(TRUE, "Rey", 5, NULL, "Miren quién es... {{NAME}}... Acabas de cometer un error al venir acá.", FALSE, FALSE);
+            Dialogue::insert(TRUE, "Rey", 5, NULL, "Miren quién es... Acabas de cometer un error al venir acá.", FALSE, FALSE);
 
             // #34
             Dialogue::insert(TRUE, "Rey", 5, NULL, "Verás, ser Rey no es fácil. A veces debes tomar decisiones que te llevarán a cometer actos atroces.", FALSE, FALSE);
@@ -178,7 +185,7 @@ class SeedController
             // ... -> 38
 
             // #36 - No Empathy
-            Dialogue::insert(TRUE, "Rey", 5, NULL, "Estás en el lado incorrecto de la historia, {{NAME}}. Nunca entenderás que no hay paz sin violencia. Te estoy dando la oportunidad para que tengas la vida que deseas, para que tengas todos los lujos que deseas... ¿Acaso no lo quieres?", TRUE, FALSE);
+            Dialogue::insert(TRUE, "Rey", 5, NULL, "Estás en el lado incorrecto de la historia. Nunca entenderás que no hay paz sin violencia. Te estoy dando la oportunidad para que tengas la vida que deseas, para que tengas todos los lujos que deseas... ¿Acaso no lo quieres?", TRUE, FALSE);
 
             // Ni muerto -> 35
             // .... -> 
@@ -187,7 +194,7 @@ class SeedController
             Dialogue::insert(TRUE, "Rey", 5, NULL, "No me quedará otra cosa que hacer. Muere!", FALSE, FALSE);
 
             // #38 - No Empathy - Ni Muerto (dice throw) (exito)
-            Dialogue::insert(TRUE, "Rey", 5, NULL, "No... como es posible... un tonto {{CLASE}} no puede matarme... *cough* *cough*...", FALSE, FALSE);
+            Dialogue::insert(TRUE, "Rey", 5, NULL, "No... como es posible... un tonto no puede matarme... *cough* *cough*...", FALSE, FALSE);
 
             // #39 - Lo lograste, has asesinado al rey
             Dialogue::insert(TRUE, "Narrator", 5, NULL, "Lo lograste, has asesinado al rey!!!", FALSE, FALSE, TRUE, 4);
@@ -195,7 +202,7 @@ class SeedController
             // Ending 4: Happy Kingdom
 
             // #40 ...
-            Dialogue::insert(FALSE, "Rey", 5, NULL, "Piensalo, {{NAME}}, no te quise encerrar, eres de mis mejores soldados. Entiendo que quieras darle todas las riquezas a todas las personas. Pero no todos hacen el mismo sacrificio que tu para poder llevar el pan a su casa. Piensa en todas las cosas maravillosas que podrias tener.", FALSE, FALSE);
+            Dialogue::insert(FALSE, "Rey", 5, NULL, "Piensalo, no te quise encerrar, eres de mis mejores soldados. Entiendo que quieras darle todas las riquezas a todas las personas. Pero no todos hacen el mismo sacrificio que tu para poder llevar el pan a su casa. Piensa en todas las cosas maravillosas que podrias tener.", FALSE, FALSE);
 
             // No, esto no esta bien.
             // Majestad, pido disculpas por haber pensado erronamente de usted
@@ -204,12 +211,12 @@ class SeedController
             // GOTO dialogue #
 
             // #41 - No Empathy - ... - Forgiveness
-            Dialogue::insert(FALSE, "Rey", 5, NULL, "Nuestro imperio será increíble {{NAME}}.", FALSE, TRUE, TRUE, 5);
+            Dialogue::insert(FALSE, "Rey", 5, NULL, "Nuestro imperio será increíble.", FALSE, TRUE, TRUE, 5);
 
             // Ending 3 Corruption
 
             // #42 - No Empathy - Ni Muerto (dice throw) (fallido)
-            Dialogue::insert(FALSE, "Rey", 5, NULL, "No tuviste que haber venido, {{NAME}}.", FALSE, FALSE);
+            Dialogue::insert(FALSE, "Rey", 5, NULL, "No tuviste que haber venido.", FALSE, FALSE);
 
             // #43 - No Empathy - Ni Muerto (dice throw) (fallido)
             Dialogue::insert(FALSE, "Rey", 5, NULL, "El rey te ha apuñalado en el estomago, estás sangrando demasiado, no puedes levantarte... es el fin... el rey logró derrotarte.", FALSE, FALSE, TRUE, 6);
@@ -270,8 +277,10 @@ class SeedController
             // #25 - Enfrentarse a ellos
             DialogueDiceThrow::insert(25, 15, 26, 27);
 
+            DB::query("UPDATE config SET is_seeded = 1 WHERE id = 1");
 
-            echo "All Seeded";
+            echo "<p>Datos de app han sido insertados</p>";
+            echo "<a href='./'>Volver al inicio</a>";
         } catch (\Throwable $th) {
             echo $th;
         }
