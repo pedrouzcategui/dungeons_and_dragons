@@ -40,6 +40,8 @@ Este proyecto implementa un sistema de juego para un RPG basado en Dungeons and 
 
 ## Instalación
 
+Ve este video: https://www.loom.com/share/506d6b18c6f641ecb343c4def72d6ec2?sid=58faaccf-8b3f-4e0d-a8d6-7c23baf92bbe
+
 Hay dos maneras de realizar la instalación, manual y por git.
 
 ### Manual
