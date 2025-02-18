@@ -52,7 +52,7 @@ class Dialogue
 
     // Insert a new dialogue
     // La razón por la que este método es estático, es porque no se necesita por el momento mantener el estado de la clase para uso posterior en otras operaciones, y esta clase solo se usa en el seeder, lo cuál facilita la acción de añadir clases.
-    public static function insert($is_character, $character_name, $chapter_id, $next_chapter_id, $text, $is_decision, $is_final, $is_ending = FALSE, $ending_id = NULL, $is_dice_throw = FALSE, $is_item = FALSE, $item_id = NULL)
+    public static function insert($is_character, $character_name, $chapter_id, $next_chapter_id, $text, $is_decision, $is_final, $is_ending = FALSE, $ending_id = NULL, $is_dice_throw = FALSE, $is_item = FALSE, $item_id = NULL, $is_stat_change = FALSE, $stat_change_id = NULL)
     {
         DB::query(
             "INSERT INTO dialogue (is_character, character_name, chapter_id, next_chapter_id, text, is_decision, is_final, is_ending, ending_id, is_dice_throw, is_item, item_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",

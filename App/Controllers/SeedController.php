@@ -49,7 +49,7 @@ class SeedController
             Item::insert("Arma de soldado", "soldier-blade.png");
             Item::insert("Arma Maldita", "devil-blade.png");
             Item::insert("Armadura de Soldado", "iron-armor.png");
-            Item::insert("Armadura Divina", "gold-armor.png");
+            Item::insert("Armadura Divina", "gold-armor.webp");
 
             //**Dialogues */
             // #1

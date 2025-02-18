@@ -19,8 +19,7 @@ form {
   border-radius: 15px;
   padding: 30px 40px;
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
-  text-align: center;
-  max-width: 500px;
+  max-width: 600px;
   width: 100%;
 }
 
@@ -58,7 +57,7 @@ input[type="text"] {
 
 .role-options label {
   cursor: pointer;
-  padding: 5px;
+  padding: 10px;
   border: 2px solid transparent;
 }
 
@@ -81,8 +80,14 @@ input[type="text"] {
   opacity: 0.8;
 }
 
+.class_image {
+  text-align: center;
+  width: 100%;
+}
+
 button {
   background-color: #ff8c42;
+  width: 100%;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -105,5 +110,9 @@ button:active {
 }
 
 .character_class_name {
-  font-size: 12px;
+  font-size: 16px;
+  text-align: center;
+  width: 100%;
+  padding-bottom: 10px;
+  border-bottom: 1px solid white;
 }

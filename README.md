@@ -34,11 +34,13 @@ Este proyecto implementa un sistema de juego para un RPG basado en Dungeons and 
 ## Requisitos
 
 - PHP 7.4 o superior
-- Servidor Apache o compatible
-- MySQL o MariaDB
+- Servidor Apache o compatible (recomendado usar XAMPP versión 3.3.0)
+- MySQL
 - Navegador moderno compatible con JavaScript y CSS
 
 ## Instalación
+
+Hay dos maneras de realizar la instalación, manual y por git.
 
 ### Manual
 
